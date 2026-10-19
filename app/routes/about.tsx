@@ -54,10 +54,10 @@ export default function About() {
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-700">
             About OTAM
           </p>
-          <h1 className="mt-3 max-w-3xl font-display text-4xl font-black tracking-tight sm:text-5xl">
+          <h1 className="mt-3 max-w-3xl font-display text-4xl font-semibold tracking-tight sm:text-5xl">
             The association behind Malawi's occupational therapists.
           </h1>
-          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink-soft">
+          <p className="text-indent-lede mt-5 max-w-2xl text-lg leading-relaxed text-ink-soft">
             OTAM is a national, independent, voluntary professional body. It
             exists so that occupational therapy in Malawi has a voice, a
             standard, and a plan for growing the profession at home.
@@ -89,7 +89,7 @@ export default function About() {
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-700">
               What the association stands for
             </p>
-            <h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
+            <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
               The objectives of OTAM
             </h2>
           </div>
@@ -97,7 +97,7 @@ export default function About() {
         <ol className="mt-10 grid gap-x-10 gap-y-6 md:grid-cols-2">
           {objectives.map((o, i) => (
             <li key={o} className="flex gap-4">
-              <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-100 font-display text-xs font-extrabold text-brand-800">
+              <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-cream-deep font-display text-xs italic text-brand-700">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <p className="leading-relaxed text-ink-soft">{o}</p>
@@ -113,7 +113,7 @@ export default function About() {
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-700">
               OT in Malawi
             </p>
-            <h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
+            <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
               Small profession, wide reach.
             </h2>
             <p className="mt-4 leading-relaxed text-ink-soft">
@@ -177,7 +177,7 @@ export default function About() {
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-700">
               Fields of practice
             </p>
-            <h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
+            <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
               Where OT makes the difference
             </h2>
           </div>

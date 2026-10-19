@@ -20,10 +20,10 @@ export default function Contact() {
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-700">
             Contact
           </p>
-          <h1 className="mt-3 max-w-3xl font-display text-4xl font-black tracking-tight sm:text-5xl">
+          <h1 className="mt-3 max-w-3xl font-display text-4xl font-semibold tracking-tight sm:text-5xl">
             Reach us directly — we read everything.
           </h1>
-          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink-soft">
+          <p className="text-indent-lede mt-5 max-w-2xl text-lg leading-relaxed text-ink-soft">
             Partnerships, press, students studying OT abroad, OTs returning
             home — the association wants to hear it all.
           </p>
@@ -60,7 +60,7 @@ export default function Contact() {
                 >
                   <div className="flex items-center gap-3">
                     <span
-                      className={`flex h-11 w-11 items-center justify-center rounded-xl font-display text-sm font-extrabold text-white ${person.tint}`}
+                      className={`flex h-11 w-11 items-center justify-center rounded-xl font-display text-sm font-semibold text-white ${person.tint}`}
                     >
                       {person.initials}
                     </span>
@@ -99,7 +99,7 @@ export default function Contact() {
               className="rounded-3xl border border-ink/10 bg-white p-7 shadow-sm sm:p-9"
               action="#"
             >
-              <h2 className="font-display text-2xl font-extrabold tracking-tight">
+              <h2 className="font-display text-2xl font-semibold tracking-tight">
                 Send the association a message
               </h2>
               <p className="mt-2 text-sm text-ink-soft">

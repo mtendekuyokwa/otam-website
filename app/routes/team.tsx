@@ -27,10 +27,10 @@ export default function Team() {
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-700">
             Our team
           </p>
-          <h1 className="mt-3 max-w-3xl font-display text-4xl font-black tracking-tight sm:text-5xl">
+          <h1 className="mt-3 max-w-3xl font-display text-4xl font-semibold tracking-tight sm:text-5xl">
             The people leading OTAM.
           </h1>
-          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink-soft">
+          <p className="text-indent-lede mt-5 max-w-2xl text-lg leading-relaxed text-ink-soft">
             A volunteer board serving Malawi's occupational therapy community —
             reachable directly, happy to talk.
           </p>
@@ -39,7 +39,7 @@ export default function Team() {
 
       {/* Board */}
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
-        <h2 className="font-display text-2xl font-extrabold tracking-tight sm:text-3xl">
+        <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
           OTAM Board
         </h2>
         <div className="mt-8 grid gap-5 md:grid-cols-2">
@@ -51,7 +51,7 @@ export default function Team() {
               <div className="flex items-center gap-4">
                 {/* Monogram avatar — real portraits to be added by exec */}
                 <span
-                  className={`flex h-16 w-16 items-center justify-center rounded-2xl font-display text-xl font-extrabold text-white ${person.tint}`}
+                  className={`flex h-16 w-16 items-center justify-center rounded-2xl font-display text-xl font-semibold text-white ${person.tint}`}
                 >
                   {person.initials}
                 </span>
@@ -98,7 +98,7 @@ export default function Team() {
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-accent-400">
                 The community
               </p>
-              <h2 className="mt-3 max-w-xl font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+              <h2 className="mt-3 max-w-xl font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl">
                 OTs in Malawi
               </h2>
               <p className="mt-4 max-w-xl leading-relaxed text-brand-100">
@@ -115,7 +115,7 @@ export default function Team() {
                 key={o.initials}
                 className="rounded-3xl bg-white/5 p-6 ring-1 ring-white/10"
               >
-                <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 font-display text-lg font-extrabold text-white/80">
+                <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 font-display text-lg font-semibold text-white/80">
                   {o.initials}
                 </span>
                 <h3 className="mt-4 font-semibold text-white">
