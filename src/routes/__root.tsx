@@ -23,7 +23,7 @@ export const Route = createRootRoute({
         href: 'https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap',
       },
       { rel: 'stylesheet', href: appCss },
-      { rel: 'icon', type: 'image/svg+xml', href: A.logo },
+      { rel: 'icon', type: 'image/jpeg', href: A.logo },
     ],
   }),
   shellComponent: RootDocument,

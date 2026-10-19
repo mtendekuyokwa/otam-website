@@ -8,12 +8,13 @@ const px = (id: number, w = 1600) =>
   `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`;
 
 export const A = {
-  logo: "/otam.svg",
+  /* ————— Identity ————— */
+  logo: "/otam-logo.jpg", // official OTAM mark (from the association)
 
   /* ————— Imagery ————— */
-  hero: px(20860618, 2000), // therapy session — hero band
+  hero: px(30678208, 2000), // clinician working with a patient in clinic
   otHands: px(30483024, 1400), // hands manipulating therapy putty
-  rehab: px(20860579, 1400), // physiotherapist working with patient
+  rehab: px(30688589, 1400), // clinician supporting a patient's arm
   childCare: px(34185202, 1400), // caring for a child
   classroom: px(25457343, 1400), // children at school desks
   lectureHall: px(27769510, 1600), // conference / CPD audience

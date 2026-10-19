@@ -25,7 +25,9 @@ export function SiteHeader() {
       className="w-full max-w-[1360px] mx-auto flex justify-between items-center z-20 relative"
     >
       <Link to="/" className="flex items-center gap-[14px] group">
-        <img src={A.logo} alt="OTAM logo" className="h-11 w-11" />
+        <span className="h-11 w-11 rounded-full bg-white flex items-center justify-center overflow-hidden shrink-0 shadow-lg shadow-black/20">
+          <img src={A.logo} alt="OTAM logo" className="h-[82%] w-[82%] object-contain" />
+        </span>
         <span className="flex flex-col leading-none">
           <span className="text-white text-2xl font-medium" style={interTight}>
             OTAM

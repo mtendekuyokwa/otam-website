@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { ArrowRight, Eye, HandHeart, Target } from "lucide-react";
+import { ArrowRight, Eye, Flag, HandHeart, Megaphone, Network, ShieldCheck, Target, TrendingUp } from "lucide-react";
 import { PageHero } from "~/components/PageHero";
 import { SiteFooter } from "~/components/SiteFooter";
 import { A } from "~/lib/assets";
@@ -20,21 +20,57 @@ const VALUES = [
 ] as const;
 
 const OBJECTIVES = [
-  "Act as the official national organisation promoting the occupational therapy profession",
-  "Represent OT to policy makers, regulatory bodies, management and training sectors",
-  "Contribute OT expertise to national policy on promotion, prevention, curative and rehabilitative health",
-  "Establish and maintain professional ethics, standards and codes of conduct",
-  "Uphold proficient standards in OT practice and education, aligned to World Federation of Occupational Therapists minimum standards",
-  "Coordinate the association's development, including a registry of qualified occupational therapists in Malawi",
-  "Promote continuing professional development and, in time, postgraduate OT education",
-  "Promote cooperation among OTs and other allied health professional groups",
-  "Publicise OT among the general public and at all levels of the healthcare system",
-  "Maintain close contact with the World Federation of Occupational Therapists and other OT associations",
-  "Encourage scientific research in occupational therapy",
-  "Facilitate the exchange and placement of OTs across Malawi's clinical services",
-  "Raise funds to further the development of OT within Malawi",
-  "Publish a professional newsletter for members and partners",
-  "Establish regional branches of OTAM as membership grows",
+  {
+    no: "01",
+    title: "Represent",
+    icon: Flag,
+    items: [
+      "Act as the official national voice of occupational therapy in Malawi",
+      "Represent the profession to policy makers, regulatory bodies, management and training sectors",
+      "Bring OT expertise into national policy — promotion, prevention, curative and rehabilitative health",
+      "Comment on social and political issues affecting medical rehabilitation",
+    ],
+  },
+  {
+    no: "02",
+    title: "Uphold",
+    icon: ShieldCheck,
+    items: [
+      "Establish and maintain professional ethics, standards and codes of conduct",
+      "Set proficient standards for OT practice and education, aligned to WFOT minimum standards",
+      "Maintain the national registry of qualified occupational therapists",
+    ],
+  },
+  {
+    no: "03",
+    title: "Grow",
+    icon: TrendingUp,
+    items: [
+      "Champion continuing professional development and, in time, postgraduate OT education",
+      "Encourage scientific research in occupational therapy",
+      "Open regional branches of OTAM as membership grows",
+    ],
+  },
+  {
+    no: "04",
+    title: "Connect",
+    icon: Network,
+    items: [
+      "Promote cooperation among OTs and all allied health professions",
+      "Keep close contact with the World Federation of Occupational Therapists and sister associations",
+      "Facilitate the exchange and placement of OTs across Malawi's clinical services",
+      "Publish a professional newsletter for members and partners",
+    ],
+  },
+  {
+    no: "05",
+    title: "Champion",
+    icon: Megaphone,
+    items: [
+      "Publicise OT among the general public and at every level of the healthcare system",
+      "Raise funds, by lawful means, to further the development of OT within Malawi",
+    ],
+  },
 ] as const;
 
 const ACTIVITIES = [
@@ -197,7 +233,7 @@ function About() {
       </section>
 
       {/* Objectives */}
-      <section className="bg-[#F6F4EE]">
+      <section className="bg-white">
         <div className="max-w-[1360px] mx-auto px-6 md:px-12 py-24">
           <motion.h2
             initial={{ opacity: 0, y: 22 }}
@@ -206,33 +242,59 @@ function About() {
             transition={{ duration: 0.7 }}
             className="text-4xl md:text-5xl leading-[1.15] max-w-[720px]" style={interTight}
           >
-            The{" "}
+            Five things OTAM{" "}
             <span className="italic" style={playfair}>
-              objectives
-            </span>{" "}
-            of the association
+              exists to do
+            </span>
           </motion.h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-0 mt-12">
-            {OBJECTIVES.map((o, i) => (
-              <motion.div
-                key={o}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ delay: (i % 5) * 0.07, duration: 0.5 }}
-                className="flex items-start gap-4 py-5 border-b border-black/8"
-              >
-                <span
-                  className="w-9 h-9 rounded-full bg-white flex items-center justify-center text-sm text-[#15221B]/50 shrink-0 mt-0.5 border border-black/8"
-                  style={interTight}
+
+          <div className="border-b border-black/8 mt-14">
+            {OBJECTIVES.map((pillar, pi) => {
+              const Icon = pillar.icon;
+              return (
+                <motion.div
+                  key={pillar.no}
+                  initial={{ opacity: 0, y: 26 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ delay: pi * 0.05, duration: 0.6 }}
+                  className="grid gap-6 lg:grid-cols-[150px_250px_1fr] items-start py-10 border-t border-black/8 group"
                 >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <p className="text-[#15221B]/75 leading-snug text-lg" style={sfPro}>
-                  {o}
-                </p>
-              </motion.div>
-            ))}
+                  <span
+                    className="italic text-6xl md:text-7xl leading-none text-[#2E7D5B]/25 group-hover:text-[#2E7D5B]/60 transition-colors"
+                    style={playfair}
+                  >
+                    {pillar.no}
+                  </span>
+
+                  <div className="flex items-center gap-4 lg:pt-1">
+                    <span className="w-11 h-11 rounded-2xl bg-[#2E7D5B]/10 flex items-center justify-center shrink-0">
+                      <Icon className="w-5 h-5 text-[#2E7D5B]" />
+                    </span>
+                    <h3 className="text-3xl" style={interTight}>
+                      {pillar.title}
+                    </h3>
+                  </div>
+
+                  <ul className="flex flex-col gap-3 lg:pt-1.5">
+                    {pillar.items.map((item, ii) => (
+                      <motion.li
+                        key={item}
+                        initial={{ opacity: 0, x: 14 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ delay: 0.15 + ii * 0.08, duration: 0.45 }}
+                        className="flex items-start gap-3.5 text-[#15221B]/75 text-lg leading-snug"
+                        style={sfPro}
+                      >
+                        <span className="mt-[9px] w-2 h-2 rounded-full bg-[#D4593B] shrink-0" />
+                        {item}
+                      </motion.li>
+                    ))}
+                  </ul>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>

@@ -45,6 +45,7 @@ function Home() {
   return (
     <main>
       <Hero />
+      <TickerBand />
       <MissionStrip />
       <PictureBoard />
       <WhatIsOt />
@@ -65,7 +66,15 @@ function Hero() {
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${A.hero})` }}
       />
-      <div className="absolute inset-0 bg-linear-to-b from-black/60 via-black/40 to-black/75 z-0" />
+      <div className="absolute inset-0 bg-linear-to-b from-black/55 via-black/35 to-[#101B14] z-0" />
+      {/* rising-sun glow, echoing the OTAM mark */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(120% 55% at 50% 108%, rgba(212,89,59,0.35) 0%, rgba(240,180,41,0.16) 34%, rgba(0,0,0,0) 68%)",
+        }}
+      />
 
       <SiteHeader />
 
@@ -82,7 +91,7 @@ function Hero() {
         </motion.span>
 
         <h1
-          className="text-white text-[40px] sm:text-[52px] md:text-[64px] font-normal leading-[1.1] md:leading-[1.05]"
+          className="text-white text-[44px] sm:text-[64px] md:text-[76px] lg:text-[84px] font-normal leading-[1.04] tracking-tight"
           style={interTight}
         >
           <motion.span
@@ -155,20 +164,20 @@ function Hero() {
           className="flex flex-row flex-wrap lg:flex-col items-center lg:items-end gap-2.5 w-full md:w-auto justify-end"
         >
           <div
-            className="h-[56px] px-5 rounded-2xl border border-white/40 text-white text-xl flex items-center whitespace-nowrap"
+            className="h-[56px] px-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-xl flex items-center whitespace-nowrap"
             style={sfPro}
           >
             Health · Education · Social sectors
           </div>
           <div className="flex items-center gap-2">
-            <div className="h-[56px] w-[56px] rounded-2xl border border-white/40 flex items-center justify-center shrink-0 text-[#F0B429]">
+            <div className="h-[56px] w-[56px] rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shrink-0 text-[#F0B429]">
               <ArrowUpRight className="w-6 h-6" />
             </div>
             <div
-              className="h-[56px] px-5 rounded-2xl border border-white/40 text-white text-xl flex items-center whitespace-nowrap"
+              className="h-[56px] px-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-xl flex items-center whitespace-nowrap"
               style={sfPro}
             >
-              Conference 2026
+              Conference 2026 · First of its kind
             </div>
           </div>
         </motion.div>
@@ -202,6 +211,26 @@ function AnimatedWords({
         </motion.span>
       ))}
     </>
+  );
+}
+
+/* ———————————————————————— Practice areas ticker ———————————————————————— */
+
+function TickerBand() {
+  const items = AREAS.map((a) => a.label);
+  return (
+    <section className="bg-[#101B14] text-white py-6 overflow-hidden">
+      <div className="flex w-max animate-marquee items-center">
+        {[...items, ...items, ...items, ...items].map((label, i) => (
+          <div key={i} className="flex items-center gap-10 shrink-0 pr-10">
+            <span className="text-2xl md:text-3xl whitespace-nowrap" style={interTight}>
+              {label}
+            </span>
+            <span className="text-xl text-[#F0B429]">✦</span>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 

@@ -13,7 +13,9 @@ export function SiteFooter() {
         {/* Brand */}
         <div className="flex flex-col gap-5 max-w-sm">
           <div className="flex items-center gap-3">
-            <img src={A.logo} alt="OTAM logo" className="h-11 w-11" />
+            <span className="h-11 w-11 rounded-full bg-white flex items-center justify-center overflow-hidden shrink-0">
+              <img src={A.logo} alt="OTAM logo" className="h-[82%] w-[82%] object-contain" />
+            </span>
             <div className="flex flex-col leading-none">
               <span className="text-2xl font-medium" style={interTight}>
                 OTAM
