@@ -1,6 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { motion } from "framer-motion";
+import {
+  motion,
+  useAnimationFrame,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+  useVelocity,
+} from "framer-motion";
 import {
   Accessibility,
   ArrowUpRight,
@@ -10,6 +19,7 @@ import {
   HeartPulse,
   Trees,
 } from "lucide-react";
+import { useRef } from "react";
 import { SiteHeader } from "~/components/SiteHeader";
 import { SiteFooter } from "~/components/SiteFooter";
 import { A } from "~/lib/assets";
@@ -216,21 +226,89 @@ function AnimatedWords({
 
 /* ———————————————————————— Practice areas ticker ———————————————————————— */
 
+/**
+ * Scroll-velocity marquee (the "award site" pattern):
+ *  - idle: slow constant drift
+ *  - scrolling down: speeds up to ~6x and leans (skews) into the motion
+ *  - scrolling up: reverses direction
+ *  - reduced-motion users: strip stays still and readable
+ *  - hover any word to make it pop
+ */
+
+const wrap = (min: number, max: number, v: number) => {
+  const range = max - min;
+  return ((((v - min) % range) + range) % range) + min;
+};
+
 function TickerBand() {
   const items = AREAS.map((a) => a.label);
+
+  const baseX = useMotionValue(0);
+  const reduce = useReducedMotion();
+  const dir = useRef<number>(1);
+
+  const { scrollY } = useScroll();
+  const scrollVelocity = useVelocity(scrollY);
+  const smoothVelocity = useSpring(scrollVelocity, {
+    damping: 50,
+    stiffness: 400,
+  });
+  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], {
+    clamp: false,
+  });
+  const skewX = useTransform(smoothVelocity, [-2500, 2500], [-7, 7]);
+  const x = useTransform(baseX, (v) => `${wrap(-25, 0, v)}%`);
+
+  useAnimationFrame((_, delta) => {
+    if (reduce) return;
+    const factor = velocityFactor.get();
+    if (factor < 0) {
+      dir.current = -1;
+    } else if (factor > 0) {
+      dir.current = 1;
+    }
+    const moveBy = dir.current * 3 * (delta / 1000) * (1 + Math.abs(factor));
+    baseX.set(baseX.get() + moveBy);
+  });
+
   return (
-    <section className="bg-[#101B14] text-white py-6 overflow-hidden">
-      <div className="flex w-max animate-marquee items-center">
-        {[...items, ...items, ...items, ...items].map((label, i) => (
-          <div key={i} className="flex items-center gap-10 shrink-0 pr-10">
-            <span className="text-2xl md:text-3xl whitespace-nowrap" style={interTight}>
-              {label}
-            </span>
-            <span className="text-xl text-[#F0B429]">✦</span>
+    <section
+      aria-label="Where occupational therapists focus their work"
+      className="bg-[#101B14] text-white py-7 overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)]"
+    >
+      <motion.div
+        style={{ x, skewX }}
+        className="flex w-max will-change-transform"
+      >
+        {Array.from({ length: 4 }, (_, copy) => (
+          <div key={copy} className="flex shrink-0 items-center" aria-hidden={copy > 0 || undefined}>
+            {items.map((label, i) => (
+              <div key={`${copy}-${i}`} className="flex items-center shrink-0">
+                <TickerWord label={label} serif={i % 2 === 1} />
+                <span className="mx-6 md:mx-9 h-1.5 w-1.5 rounded-full bg-[#F0B429]/60 shrink-0" />
+              </div>
+            ))}
           </div>
         ))}
-      </div>
+      </motion.div>
     </section>
+  );
+}
+
+function TickerWord({ label, serif }: { label: string; serif: boolean }) {
+  return (
+    <motion.span
+      whileHover={{ scale: 1.14 }}
+      transition={{ type: "spring", stiffness: 320, damping: 18 }}
+      className={
+        serif
+          ? "italic text-[#F0B429] text-[clamp(26px,4.2vw,54px)] leading-none cursor-default inline-block"
+          : "text-white text-[clamp(26px,4.2vw,54px)] leading-none cursor-default inline-block"
+      }
+      style={(serif ? playfair : interTight) as React.CSSProperties}
+    >
+      {label}
+    </motion.span>
   );
 }
 
