@@ -15,8 +15,14 @@ import {
   ArrowUpRight,
   Baby,
   Brain,
+  Building2,
+  ChevronLeft,
+  ChevronRight,
+  Compass,
+  Globe,
   GraduationCap,
   HeartPulse,
+  ShieldCheck,
   Trees,
 } from "lucide-react";
 import { useRef } from "react";
@@ -35,6 +41,98 @@ const AREAS = [
   { label: "Schools", icon: GraduationCap },
   { label: "Community-based rehab", icon: Trees },
   { label: "Disability inclusion", icon: Accessibility },
+] as const;
+
+function WfotLogo() {
+  return (
+    <svg viewBox="0 0 32 32" className="w-6 h-6 text-[#F0B429]" fill="none" stroke="currentColor" strokeWidth="2">
+      <circle cx="16" cy="16" r="13" />
+      <path d="M3 16h26M16 3c3.5 4 3.5 22 0 26M16 3c-3.5 4-3.5 22 0 26" />
+    </svg>
+  );
+}
+
+function OtargLogo() {
+  return (
+    <svg viewBox="0 0 32 32" className="w-6 h-6 text-[#4ADE80]" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M16 3l4 8 9 1-6 6 2 9-9-5-9 5 2-9-6-6 9-1 4-8z" />
+    </svg>
+  );
+}
+
+function KachereLogo() {
+  return (
+    <svg viewBox="0 0 32 32" className="w-6 h-6 text-[#E88A63]" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M16 28s-10-7-10-14a6 6 0 0112-2 6 6 0 0112 2c0 7-10 14-10 14z" />
+      <path d="M12 14l3 3 5-6" />
+    </svg>
+  );
+}
+
+function KuhesLogo() {
+  return (
+    <svg viewBox="0 0 32 32" className="w-6 h-6 text-[#F0B429]" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M6 10l10-5 10 5v12l-10 5-10-5V10z" />
+      <path d="M16 15v10M12 17l4-2 4 2" />
+    </svg>
+  );
+}
+
+function CureLogo() {
+  return (
+    <svg viewBox="0 0 32 32" className="w-6 h-6 text-[#4ADE80]" fill="none" stroke="currentColor" strokeWidth="2">
+      <rect x="5" y="5" width="22" height="22" rx="4" />
+      <path d="M16 10v12M10 16h12" />
+    </svg>
+  );
+}
+
+function MohLogo() {
+  return (
+    <svg viewBox="0 0 32 32" className="w-6 h-6 text-[#E88A63]" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M16 4l10 4v8c0 7-4.5 11.5-10 13.5C10.5 27.5 6 23 6 16V8l10-4z" />
+      <path d="M12 16l3 3 5-6" />
+    </svg>
+  );
+}
+
+const AFFILIATED_ITEMS = [
+  {
+    name: "World Federation of Occupational Therapists",
+    acronym: "WFOT",
+    logo: WfotLogo,
+    role: "Global Peak Body",
+  },
+  {
+    name: "Occupational Therapy Africa Regional Group",
+    acronym: "OTARG",
+    logo: OtargLogo,
+    role: "Regional Federation",
+  },
+  {
+    name: "Kachere Rehabilitation Centre",
+    acronym: "Kachere",
+    logo: KachereLogo,
+    role: "National Rehab",
+  },
+  {
+    name: "Kamuzu University of Health Sciences",
+    acronym: "KUHeS",
+    logo: KuhesLogo,
+    role: "Academic Partner",
+  },
+  {
+    name: "Beit CURE International Hospital",
+    acronym: "CURE Malawi",
+    logo: CureLogo,
+    role: "Clinical Partner",
+  },
+  {
+    name: "Ministry of Health Malawi",
+    acronym: "MoH",
+    logo: MohLogo,
+    role: "Government Partner",
+  },
 ] as const;
 
 export const Route = createFileRoute("/")({
@@ -241,7 +339,7 @@ const wrap = (min: number, max: number, v: number) => {
 };
 
 function TickerBand() {
-  const items = AREAS.map((a) => a.label);
+  const items = AFFILIATED_ITEMS;
 
   const baseX = useMotionValue(0);
   const reduce = useReducedMotion();
@@ -256,8 +354,8 @@ function TickerBand() {
   const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], {
     clamp: false,
   });
-  const skewX = useTransform(smoothVelocity, [-2500, 2500], [-7, 7]);
-  const x = useTransform(baseX, (v) => `${wrap(-25, 0, v)}%`);
+  const skewX = useTransform(smoothVelocity, [-2500, 2500], [-5, 5]);
+  const x = useTransform(baseX, (v) => `${wrap(-33.33, 0, v)}%`);
 
   useAnimationFrame((_, delta) => {
     if (reduce) return;
@@ -267,48 +365,80 @@ function TickerBand() {
     } else if (factor > 0) {
       dir.current = 1;
     }
-    const moveBy = dir.current * 3 * (delta / 1000) * (1 + Math.abs(factor));
+    const moveBy = dir.current * 1.0 * (delta / 1000) * (1 + Math.abs(factor));
     baseX.set(baseX.get() + moveBy);
   });
 
   return (
     <section
-      aria-label="Where occupational therapists focus their work"
-      className="bg-[#101B14] text-white py-7 overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)]"
+      aria-label="Affiliated organizations and network partners"
+      className="bg-[#15221B] text-white py-12 border-y border-white/10 overflow-hidden relative"
     >
-      <motion.div
-        style={{ x, skewX }}
-        className="flex w-max will-change-transform"
-      >
-        {Array.from({ length: 4 }, (_, copy) => (
-          <div key={copy} className="flex shrink-0 items-center" aria-hidden={copy > 0 || undefined}>
-            {items.map((label, i) => (
-              <div key={`${copy}-${i}`} className="flex items-center shrink-0">
-                <TickerWord label={label} serif={i % 2 === 1} />
-                <span className="mx-6 md:mx-9 h-1.5 w-1.5 rounded-full bg-[#F0B429]/60 shrink-0" />
-              </div>
-            ))}
-          </div>
-        ))}
-      </motion.div>
-    </section>
-  );
-}
+      <div className="max-w-[1360px] mx-auto px-6 md:px-12 mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <span className="text-[#F0B429] text-xs tracking-[0.22em] uppercase font-medium" style={interTight}>
+            Global & National Network
+          </span>
+          <h2 className="text-2xl md:text-3xl text-white tracking-tight mt-1" style={interTight}>
+            Affiliated{" "}
+            <span className="italic text-[#F0B429]" style={playfair}>
+              Organizations & Partners
+            </span>
+          </h2>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => { dir.current = -1; baseX.set(baseX.get() + 12); }}
+            aria-label="Move ticker left"
+            className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-colors cursor-pointer"
+            title="Move back"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button
+            onClick={() => { dir.current = 1; baseX.set(baseX.get() - 12); }}
+            aria-label="Move ticker right"
+            className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-colors cursor-pointer"
+            title="Move forth"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+      </div>
 
-function TickerWord({ label, serif }: { label: string; serif: boolean }) {
-  return (
-    <motion.span
-      whileHover={{ scale: 1.14 }}
-      transition={{ type: "spring", stiffness: 320, damping: 18 }}
-      className={
-        serif
-          ? "italic text-[#F0B429] text-[clamp(26px,4.2vw,54px)] leading-none cursor-default inline-block"
-          : "text-white text-[clamp(26px,4.2vw,54px)] leading-none cursor-default inline-block"
-      }
-      style={(serif ? playfair : interTight) as React.CSSProperties}
-    >
-      {label}
-    </motion.span>
+      <div className="relative [mask-image:linear-gradient(90deg,transparent,black_4%,black_96%,transparent)]">
+        <motion.div
+          style={{ x, skewX }}
+          className="flex w-max will-change-transform items-center gap-12"
+        >
+          {Array.from({ length: 3 }, (_, copy) => (
+            <div key={copy} className="flex shrink-0 items-center gap-12" aria-hidden={copy > 0 || undefined}>
+              {items.map(({ name, acronym, logo: Logo, role }, i) => (
+                <a
+                  key={`${copy}-${i}`}
+                  href="https://otam.wordpress.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 group cursor-pointer opacity-80 hover:opacity-100 transition-opacity"
+                >
+                  <div className="w-10 h-10 flex items-center justify-center text-[#F0B429] group-hover:scale-110 transition-transform">
+                    <Logo />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-white font-medium text-base tracking-wide flex items-center gap-2" style={interTight}>
+                      {name}
+                    </span>
+                    <span className="text-white/40 text-xs tracking-wider uppercase" style={sfPro}>
+                      {role}
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
   );
 }
 
