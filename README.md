@@ -1,87 +1,41 @@
-# Welcome to React Router!
+# OTAM — Occupational Therapy Association of Malawi
 
-A modern, production-ready template for building full-stack React applications using React Router.
+Marketing website for **OTAM**, the national, independent, voluntary
+professional body for occupational therapists in Malawi. Pages: Home,
+About, Team and Contact (static content for now — no external links,
+forms are UI-only).
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+Built with TanStack Start v1, React 19, TypeScript, Tailwind CSS v4,
+framer-motion and lucide-react.
 
-## Features
+## Structure
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+| Path                            | Purpose                                                    |
+| ------------------------------- | ---------------------------------------------------------- |
+| `src/routes/index.tsx`          | Home — hero, mission strip, where OTs work, highlights     |
+| `src/routes/about.tsx`          | About — story, vision/mission, values, objectives          |
+| `src/routes/team.tsx`           | Team — executive committee, sub-committees, membership     |
+| `src/routes/contact.tsx`        | Contact — details + inquiry form (UI only)                 |
+| `src/routes/__root.tsx`         | Root document shell (head, meta, fonts, styles)            |
+| `src/components/SiteHeader.tsx` | Shared nav (desktop pill nav + mobile menu)                |
+| `src/components/PageHero.tsx`   | Shared hero band for inner pages                           |
+| `src/components/SiteFooter.tsx` | Shared footer                                              |
+| `src/lib/assets.ts`             | Image map `A` — photography hotlinked from pexels.com      |
+| `public/otam.svg`               | OTAM rising-sun mark (logo/favicon)                        |
+| `src/styles.css`                | Tailwind v4 entry + marquee keyframes                      |
 
-## Getting Started
-
-### Installation
-
-Install the dependencies:
+## Getting started
 
 ```bash
 npm install
+npm run dev      # develop (http://localhost:3000)
+npm run build    # typecheck + production build to .output
+npm run start    # serve the production build (node .output/server/index.mjs)
 ```
 
-### Development
+Notes:
 
-Start the development server with HMR:
-
-```bash
-npm run dev
-```
-
-Your application will be available at `http://localhost:5173`.
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
-```
-
-## Deployment
-
-### Docker Deployment
-
-To build and run using Docker:
-
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+- Fonts (Inter Tight, Playfair Display) load from Google Fonts; photos load
+  from `images.pexels.com` — the site needs a network connection for imagery.
+- Team portraits in `src/lib/assets.ts` are stock placeholders to be replaced
+  with real committee photos.
