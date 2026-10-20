@@ -34,3 +34,16 @@ export const A = {
   pTessie: px(18252404), // Tessie Kalobekamo — Committee Member
   pOsman: px(28426641), // Osman Mdala — Committee Member
 } as const;
+
+/**
+ * Hero slideshow — the home-page backdrop slowly crossfades between these
+ * scenes of Malawian practice (clinic, child care, outreach, community, hands).
+ * Order matters: the first frame paints before any transition.
+ */
+export const HERO_ROTATION = [
+  A.hero,
+  A.childCare,
+  A.village,
+  A.outreach,
+  A.otHands,
+] as const;

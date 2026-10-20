@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
 import {
   Accessibility,
   ArrowUpRight,
@@ -13,7 +14,7 @@ import {
 import { SiteHeader } from "~/components/SiteHeader";
 import { SiteFooter } from "~/components/SiteFooter";
 import { RevealImage } from "~/components/RevealImage";
-import { A } from "~/lib/assets";
+import { A, HERO_ROTATION } from "~/lib/assets";
 
 const interTight = { fontFamily: "'Inter Tight', sans-serif" } as const;
 const playfair = { fontFamily: "'Playfair Display', serif" } as const;
@@ -114,25 +115,53 @@ function Home() {
 
 function Hero() {
   const reduce = useReducedMotion();
+  const [frame, setFrame] = useState(0);
+
+  /* Slow slideshow: one scene every 7s, crossfading over 1.4s. */
+  useEffect(() => {
+    if (reduce || HERO_ROTATION.length < 2) return;
+    const id = setInterval(
+      () => setFrame((f) => (f + 1) % HERO_ROTATION.length),
+      7000,
+    );
+    return () => clearInterval(id);
+  }, [reduce]);
+
   return (
     <section className="relative min-h-screen w-full text-white flex flex-col justify-between p-6 md:p-12 overflow-hidden bg-[#101B14]">
-      {/* backdrop opens like a window on load — image settles from a slight zoom */}
+      {/* backdrop opens like a window on load, then lives — Malawian practice
+          scenes slowly crossfade while each one drifts on a mirror-zoom */}
       <motion.div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${A.hero})` }}
-        initial={
-          reduce ? undefined : { clipPath: "inset(0 0 100% 0)", scale: 1.15 }
-        }
-        animate={
-          reduce
-            ? undefined
-            : { clipPath: "inset(0 0 0 0)", scale: 1 }
-        }
-        transition={{
-          clipPath: { duration: 1.1, ease: [0.77, 0, 0.175, 1], delay: 0.1 },
-          scale: { duration: 1.4, ease: [0.22, 1, 0.36, 1], delay: 0.1 },
-        }}
-      />
+        className="absolute inset-0 overflow-hidden"
+        initial={reduce ? undefined : { clipPath: "inset(0 0 100% 0)" }}
+        animate={reduce ? undefined : { clipPath: "inset(0 0 0 0)" }}
+        transition={{ duration: 1.1, ease: [0.77, 0, 0.175, 1], delay: 0.1 }}
+        aria-hidden
+      >
+        {HERO_ROTATION.map((src, i) => (
+          <motion.img
+            key={src}
+            src={src}
+            alt=""
+            loading="eager"
+            className="absolute inset-0 h-full w-full object-cover"
+            initial={false}
+            animate={{
+              opacity: frame === i ? 1 : 0,
+              scale: reduce ? 1 : [1.06, 1.16],
+            }}
+            transition={{
+              opacity: { duration: 1.4, ease: "easeInOut" },
+              scale: {
+                duration: 10,
+                ease: "linear",
+                repeat: Infinity,
+                repeatType: "mirror",
+              },
+            }}
+          />
+        ))}
+      </motion.div>
       <div className="absolute inset-0 bg-linear-to-b from-black/55 via-black/35 to-[#101B14] z-0" />
       {/* rising-sun glow, echoing the OTAM mark */}
       <div
