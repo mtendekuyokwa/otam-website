@@ -10,6 +10,7 @@ const sfPro = { fontFamily: "'SF Pro Rounded', system-ui, sans-serif" } as const
 export const NAV_LINKS = [
   { label: "Home", to: "/" },
   { label: "About", to: "/about" },
+  { label: "Blog", to: "/blog" },
   { label: "Team", to: "/team" },
   { label: "Contact", to: "/contact" },
 ] as const;

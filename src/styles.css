@@ -102,3 +102,47 @@ body {
   }
 }
 
+/* ————— Subtle dot texture (Stripe-blog-style) —————
+   Feather-soft polka texture, applied on an absolute overlay div so it
+   layers over any band colour. Keep the alpha low — it must be felt,
+   not noticed. Combine with .dot-fade to melt the dots out at the edges. */
+.dot-dark,
+.dot-light {
+  background-size: 22px 22px;
+  background-position: 0 0;
+}
+/* gold pinpricks for dark green bands */
+.dot-dark {
+  background-image: radial-gradient(
+    circle,
+    rgba(240, 180, 41, 0.22) 1px,
+    transparent 1.6px
+  );
+}
+/* ink pinpricks for cream/white bands */
+.dot-light {
+  background-image: radial-gradient(
+    circle,
+    rgba(21, 34, 27, 0.12) 1px,
+    transparent 1.6px
+  );
+}
+
+/* melt the dot field out towards one edge so texture reads as atmosphere */
+.dot-fade-top {
+  -webkit-mask-image: radial-gradient(
+    130% 90% at 50% 0%,
+    black 18%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(130% 90% at 50% 0%, black 18%, transparent 78%);
+}
+.dot-fade-bottom {
+  -webkit-mask-image: radial-gradient(
+    130% 90% at 50% 100%,
+    black 18%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(130% 90% at 50% 100%, black 18%, transparent 78%);
+}
+

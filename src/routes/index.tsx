@@ -648,18 +648,21 @@ function VisionBand() {
 
 const HIGHLIGHTS = [
   {
+    slug: "national-conference-2026",
     title: "National Conference 2026",
     body: "OTAM's first full scientific conference — tracks, workshops, abstracts and accommodation for OTs across Malawi and the region.",
     image: A.lectureHall,
     tag: "Events",
   },
   {
+    slug: "ot-education-in-malawi",
     title: "Education & CPD",
     body: "Workshops, mentorship and continuing professional development — working towards an OT course trained and built in Malawi.",
     image: A.students,
     tag: "Growth",
   },
   {
+    slug: "join-otam-membership",
     title: "Membership",
     body: "Open to qualified OTs, OT technicians, students and associate or institutional members — unrestricted by race, creed, gender or politics.",
     image: A.community,
@@ -689,9 +692,12 @@ function Highlights() {
 
         <div className="grid gap-6 md:grid-cols-3">
           {HIGHLIGHTS.map((h, i) => (
-            <article
-              key={h.title}
-              className="group flex flex-col gap-4"
+            <Link
+              key={h.slug}
+              to="/blog/$slug"
+              params={{ slug: h.slug }}
+              aria-label={`Read the blog story: ${h.title}`}
+              className="group flex flex-col gap-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F0B429] focus-visible:rounded-3xl"
             >
               <RevealImage
                 src={h.image}
@@ -714,14 +720,21 @@ function Highlights() {
                 }
               />
               <div className="flex flex-col gap-2 px-1 pb-2">
-                <h3 className="text-2xl text-[#15221B]" style={interTight}>
+                <h3
+                  className="text-2xl text-[#15221B] flex items-start justify-between gap-3 transition-colors duration-300 group-hover:text-[#2E7D5B]"
+                  style={interTight}
+                >
                   {h.title}
+                  <ArrowUpRight
+                    className="w-5 h-5 mt-1 shrink-0 text-[#15221B]/25 transition-all duration-300 group-hover:text-[#F0B429] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    aria-hidden
+                  />
                 </h3>
                 <p className="text-[#15221B]/60 text-base leading-relaxed" style={sfPro}>
                   {h.body}
                 </p>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </div>
