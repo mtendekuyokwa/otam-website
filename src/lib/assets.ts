@@ -2,6 +2,8 @@
  * Asset map for the OTAM website.
  * Photography is hotlinked from Pexels (free to use, pexels.com/license).
  * Team portraits are stock placeholders — swap for real photos when available.
+ * Partner logos for the home-page affiliates strip live in public/logos/
+ * (WFOT, MAP/Kachere, Sandi, Motivation, UWC).
  */
 
 const px = (id: number, w = 1600) =>

@@ -12,7 +12,7 @@ framer-motion and lucide-react.
 
 | Path                            | Purpose                                                    |
 | ------------------------------- | ---------------------------------------------------------- |
-| `src/routes/index.tsx`          | Home — hero, mission strip, where OTs work, highlights     |
+| `src/routes/index.tsx`          | Home — hero, affiliates strip, mission strip, where OTs work |
 | `src/routes/about.tsx`          | About — story, vision/mission, values, objectives          |
 | `src/routes/team.tsx`           | Team — executive committee, sub-committees, membership     |
 | `src/routes/contact.tsx`        | Contact — details + inquiry form (UI only)                 |
@@ -22,7 +22,7 @@ framer-motion and lucide-react.
 | `src/components/SiteFooter.tsx` | Shared footer                                              |
 | `src/lib/assets.ts`             | Image map `A` — photography hotlinked from pexels.com      |
 | `public/otam.svg`               | OTAM rising-sun mark (logo/favicon)                        |
-| `src/styles.css`                | Tailwind v4 entry + marquee keyframes                      |
+| `src/styles.css`                | Tailwind v4 entry                                          |
 
 ## Getting started
 

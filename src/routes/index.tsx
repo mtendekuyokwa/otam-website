@@ -1,31 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import {
-  motion,
-  useAnimationFrame,
-  useMotionValue,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-  useVelocity,
-} from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Accessibility,
   ArrowUpRight,
   Baby,
   Brain,
-  Building2,
-  ChevronLeft,
-  ChevronRight,
-  Compass,
-  Globe,
   GraduationCap,
   HeartPulse,
-  ShieldCheck,
   Trees,
 } from "lucide-react";
-import { useRef } from "react";
 import { SiteHeader } from "~/components/SiteHeader";
 import { SiteFooter } from "~/components/SiteFooter";
 import { A } from "~/lib/assets";
@@ -43,97 +27,57 @@ const AREAS = [
   { label: "Disability inclusion", icon: Accessibility },
 ] as const;
 
-function WfotLogo() {
-  return (
-    <svg viewBox="0 0 32 32" className="w-6 h-6 text-[#F0B429]" fill="none" stroke="currentColor" strokeWidth="2">
-      <circle cx="16" cy="16" r="13" />
-      <path d="M3 16h26M16 3c3.5 4 3.5 22 0 26M16 3c-3.5 4-3.5 22 0 26" />
-    </svg>
-  );
-}
+type Affiliate = {
+  name: string;
+  short: string;
+  logo: string;
+  href: string;
+  role: string;
+  dark?: boolean;
+};
 
-function OtargLogo() {
-  return (
-    <svg viewBox="0 0 32 32" className="w-6 h-6 text-[#4ADE80]" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M16 3l4 8 9 1-6 6 2 9-9-5-9 5 2-9-6-6 9-1 4-8z" />
-    </svg>
-  );
-}
-
-function KachereLogo() {
-  return (
-    <svg viewBox="0 0 32 32" className="w-6 h-6 text-[#E88A63]" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M16 28s-10-7-10-14a6 6 0 0112-2 6 6 0 0112 2c0 7-10 14-10 14z" />
-      <path d="M12 14l3 3 5-6" />
-    </svg>
-  );
-}
-
-function KuhesLogo() {
-  return (
-    <svg viewBox="0 0 32 32" className="w-6 h-6 text-[#F0B429]" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M6 10l10-5 10 5v12l-10 5-10-5V10z" />
-      <path d="M16 15v10M12 17l4-2 4 2" />
-    </svg>
-  );
-}
-
-function CureLogo() {
-  return (
-    <svg viewBox="0 0 32 32" className="w-6 h-6 text-[#4ADE80]" fill="none" stroke="currentColor" strokeWidth="2">
-      <rect x="5" y="5" width="22" height="22" rx="4" />
-      <path d="M16 10v12M10 16h12" />
-    </svg>
-  );
-}
-
-function MohLogo() {
-  return (
-    <svg viewBox="0 0 32 32" className="w-6 h-6 text-[#E88A63]" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M16 4l10 4v8c0 7-4.5 11.5-10 13.5C10.5 27.5 6 23 6 16V8l10-4z" />
-      <path d="M12 16l3 3 5-6" />
-    </svg>
-  );
-}
-
-const AFFILIATED_ITEMS = [
+/**
+ * Organizations featured on OTAM's own site (otamalawi.wordpress.com)
+ * and named in OTAM's objectives — with their official logos (public/logos/).
+ */
+const AFFILIATES: Affiliate[] = [
   {
     name: "World Federation of Occupational Therapists",
-    acronym: "WFOT",
-    logo: WfotLogo,
-    role: "Global Peak Body",
-  },
-  {
-    name: "Occupational Therapy Africa Regional Group",
-    acronym: "OTARG",
-    logo: OtargLogo,
-    role: "Regional Federation",
+    short: "WFOT",
+    logo: "/logos/wfot.svg",
+    href: "https://wfot.org/",
+    role: "Global peak body",
   },
   {
     name: "Kachere Rehabilitation Centre",
-    acronym: "Kachere",
-    logo: KachereLogo,
-    role: "National Rehab",
+    short: "Kachere",
+    logo: "/logos/map-kachere.png",
+    href: "https://www.mapmw.org/",
+    role: "Medical rehab · Blantyre",
   },
   {
-    name: "Kamuzu University of Health Sciences",
-    acronym: "KUHeS",
-    logo: KuhesLogo,
-    role: "Academic Partner",
+    name: "Sandi Rehabilitation, Assessment & Therapy Centre",
+    short: "Sandi",
+    logo: "/logos/sandi.jpg",
+    href: "https://www.facebook.com/SandiRATC/",
+    role: "Pediatric therapy",
   },
   {
-    name: "Beit CURE International Hospital",
-    acronym: "CURE Malawi",
-    logo: CureLogo,
-    role: "Clinical Partner",
+    name: "Motivation",
+    short: "Motivation",
+    logo: "/logos/motivation.png",
+    href: "https://motivation.org.uk/",
+    role: "Wheelchairs & AT",
+    dark: true,
   },
   {
-    name: "Ministry of Health Malawi",
-    acronym: "MoH",
-    logo: MohLogo,
-    role: "Government Partner",
+    name: "University of the Western Cape",
+    short: "UWC",
+    logo: "/logos/uwc.svg",
+    href: "https://www.uwc.ac.za/",
+    role: "OT education partner",
   },
-] as const;
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -153,7 +97,7 @@ function Home() {
   return (
     <main>
       <Hero />
-      <TickerBand />
+      <AffiliatesStrip />
       <MissionStrip />
       <PictureBoard />
       <WhatIsOt />
@@ -322,121 +266,89 @@ function AnimatedWords({
   );
 }
 
-/* ———————————————————————— Practice areas ticker ———————————————————————— */
+/* ———————————————————————— Affiliates strip ———————————————————————— */
 
-/**
- * Scroll-velocity marquee (the "award site" pattern):
- *  - idle: slow constant drift
- *  - scrolling down: speeds up to ~6x and leans (skews) into the motion
- *  - scrolling up: reverses direction
- *  - reduced-motion users: strip stays still and readable
- *  - hover any word to make it pop
- */
-
-const wrap = (min: number, max: number, v: number) => {
-  const range = max - min;
-  return ((((v - min) % range) + range) % range) + min;
-};
-
-function TickerBand() {
-  const items = AFFILIATED_ITEMS;
-
-  const baseX = useMotionValue(0);
-  const reduce = useReducedMotion();
-  const dir = useRef<number>(1);
-
-  const { scrollY } = useScroll();
-  const scrollVelocity = useVelocity(scrollY);
-  const smoothVelocity = useSpring(scrollVelocity, {
-    damping: 50,
-    stiffness: 400,
-  });
-  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], {
-    clamp: false,
-  });
-  const skewX = useTransform(smoothVelocity, [-2500, 2500], [-5, 5]);
-  const x = useTransform(baseX, (v) => `${wrap(-33.33, 0, v)}%`);
-
-  useAnimationFrame((_, delta) => {
-    if (reduce) return;
-    const factor = velocityFactor.get();
-    if (factor < 0) {
-      dir.current = -1;
-    } else if (factor > 0) {
-      dir.current = 1;
-    }
-    const moveBy = dir.current * 1.0 * (delta / 1000) * (1 + Math.abs(factor));
-    baseX.set(baseX.get() + moveBy);
-  });
-
+function AffiliatesStrip() {
   return (
     <section
       aria-label="Affiliated organizations and network partners"
-      className="bg-[#15221B] text-white py-12 border-y border-white/10 overflow-hidden relative"
+      className="bg-[#15221B] text-white py-20 border-y border-white/10"
     >
-      <div className="max-w-[1360px] mx-auto px-6 md:px-12 mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-          <span className="text-[#F0B429] text-xs tracking-[0.22em] uppercase font-medium" style={interTight}>
-            Global & National Network
-          </span>
-          <h2 className="text-2xl md:text-3xl text-white tracking-tight mt-1" style={interTight}>
-            Affiliated{" "}
-            <span className="italic text-[#F0B429]" style={playfair}>
-              Organizations & Partners
+      <div className="max-w-[1360px] mx-auto px-6 md:px-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+          <div>
+            <span
+              className="text-[#F0B429] text-xs tracking-[0.22em] uppercase font-medium"
+              style={interTight}
+            >
+              Global &amp; National Network
             </span>
-          </h2>
-        </div>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => { dir.current = -1; baseX.set(baseX.get() + 12); }}
-            aria-label="Move ticker left"
-            className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-colors cursor-pointer"
-            title="Move back"
+            <h2
+              className="text-2xl md:text-3xl text-white tracking-tight mt-1"
+              style={interTight}
+            >
+              Affiliated{" "}
+              <span className="italic text-[#F0B429]" style={playfair}>
+                Organizations &amp; Partners
+              </span>
+            </h2>
+          </div>
+          <p
+            className="text-white/50 text-base max-w-[420px] md:text-right"
+            style={sfPro}
           >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
-            onClick={() => { dir.current = 1; baseX.set(baseX.get() - 12); }}
-            aria-label="Move ticker right"
-            className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-colors cursor-pointer"
-            title="Move forth"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
+            OTAM keeps close contact with the WFOT and other OT associations,
+            and works with the clinics and partners serving Malawi.
+          </p>
         </div>
-      </div>
 
-      <div className="relative [mask-image:linear-gradient(90deg,transparent,black_4%,black_96%,transparent)]">
-        <motion.div
-          style={{ x, skewX }}
-          className="flex w-max will-change-transform items-center gap-12"
-        >
-          {Array.from({ length: 3 }, (_, copy) => (
-            <div key={copy} className="flex shrink-0 items-center gap-12" aria-hidden={copy > 0 || undefined}>
-              {items.map(({ name, acronym, logo: Logo, role }, i) => (
-                <a
-                  key={`${copy}-${i}`}
-                  href="https://otam.wordpress.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 group cursor-pointer opacity-80 hover:opacity-100 transition-opacity"
+        <div className="grid gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-5">
+          {AFFILIATES.map(({ name, short, logo, href, role, dark }, i) => (
+            <motion.a
+              key={short}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={name}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ delay: i * 0.08, duration: 0.5, ease: "easeOut" }}
+              className="group flex flex-col gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F0B429] rounded-2xl"
+            >
+              <div
+                className={`h-28 rounded-2xl flex items-center justify-center p-5 transition-transform duration-300 group-hover:-translate-y-1 ${
+                  dark ? "bg-[#1E6E4F]" : "bg-white"
+                }`}
+              >
+                <img
+                  src={logo}
+                  alt={`${name} logo`}
+                  loading="lazy"
+                  className={
+                    dark
+                      ? "max-h-full max-w-full object-contain"
+                      : "max-h-14 w-auto max-w-full object-contain"
+                  }
+                />
+              </div>
+              <div className="px-1">
+                <span
+                  className="block text-white/90 text-sm font-medium leading-snug"
+                  style={interTight}
                 >
-                  <div className="w-10 h-10 flex items-center justify-center text-[#F0B429] group-hover:scale-110 transition-transform">
-                    <Logo />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-white font-medium text-base tracking-wide flex items-center gap-2" style={interTight}>
-                      {name}
-                    </span>
-                    <span className="text-white/40 text-xs tracking-wider uppercase" style={sfPro}>
-                      {role}
-                    </span>
-                  </div>
-                </a>
-              ))}
-            </div>
+                  {short}
+                </span>
+                <span
+                  className="block text-white/45 text-xs tracking-wider uppercase mt-0.5"
+                  style={sfPro}
+                >
+                  {role}
+                </span>
+              </div>
+            </motion.a>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
