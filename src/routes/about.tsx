@@ -145,7 +145,7 @@ function About() {
             </div>
             <Link
               to="/team"
-              className="w-fit h-12 px-6 bg-[#15221B] text-white rounded-2xl inline-flex items-center gap-2 text-lg font-medium hover:bg-[#1f3327] transition-colors"
+              className="btn-press w-fit h-12 px-6 bg-[#15221B] text-white rounded-2xl inline-flex items-center gap-2 text-lg font-medium hover:bg-[#1f3327]"
               style={sfPro}
             >
               Meet the executive committee

@@ -177,7 +177,7 @@ function Contact() {
                 />
                 <button
                   type="submit"
-                  className="h-14 px-8 bg-[#15221B] text-white rounded-2xl inline-flex items-center justify-center gap-2.5 text-lg font-medium hover:bg-[#1f3327] transition-colors w-fit mt-2"
+                  className="btn-press h-14 px-8 bg-[#15221B] text-white rounded-2xl inline-flex items-center justify-center gap-2.5 text-lg font-medium hover:bg-[#1f3327] w-fit mt-2"
                   style={sfPro}
                 >
                   Send message

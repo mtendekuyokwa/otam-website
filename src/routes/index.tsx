@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   Accessibility,
   ArrowUpRight,
@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { SiteHeader } from "~/components/SiteHeader";
 import { SiteFooter } from "~/components/SiteFooter";
+import { RevealImage } from "~/components/RevealImage";
 import { A } from "~/lib/assets";
 
 const interTight = { fontFamily: "'Inter Tight', sans-serif" } as const;
@@ -112,11 +113,25 @@ function Home() {
 /* ———————————————————————— Hero ———————————————————————— */
 
 function Hero() {
+  const reduce = useReducedMotion();
   return (
-    <section className="relative min-h-screen w-full text-white flex flex-col justify-between p-6 md:p-12 overflow-hidden">
-      <div
+    <section className="relative min-h-screen w-full text-white flex flex-col justify-between p-6 md:p-12 overflow-hidden bg-[#101B14]">
+      {/* backdrop opens like a window on load — image settles from a slight zoom */}
+      <motion.div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${A.hero})` }}
+        initial={
+          reduce ? undefined : { clipPath: "inset(0 0 100% 0)", scale: 1.15 }
+        }
+        animate={
+          reduce
+            ? undefined
+            : { clipPath: "inset(0 0 0 0)", scale: 1 }
+        }
+        transition={{
+          clipPath: { duration: 1.1, ease: [0.77, 0, 0.175, 1], delay: 0.1 },
+          scale: { duration: 1.4, ease: [0.22, 1, 0.36, 1], delay: 0.1 },
+        }}
       />
       <div className="absolute inset-0 bg-linear-to-b from-black/55 via-black/35 to-[#101B14] z-0" />
       {/* rising-sun glow, echoing the OTAM mark */}
@@ -135,7 +150,7 @@ function Hero() {
         <motion.span
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.55 }}
+          transition={{ delay: 0.15, duration: 0.55 }}
           className="h-9 px-5 rounded-full border border-white/40 text-white/80 text-sm flex items-center tracking-[0.14em] uppercase"
           style={interTight}
         >
@@ -150,7 +165,7 @@ function Hero() {
             className="block"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
+            transition={{ delay: 0.25, duration: 0.6 }}
           >
             Helping every Malawian
           </motion.span>
@@ -158,7 +173,7 @@ function Hero() {
             className="block text-[#F0B429]"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
           >
             <span className="italic" style={playfair}>
               do, be &amp; belong
@@ -168,7 +183,7 @@ function Hero() {
             className="block"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.6 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
           >
             through occupational therapy
           </motion.span>
@@ -177,19 +192,19 @@ function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.0, duration: 0.5 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
           className="flex flex-wrap justify-center gap-3"
         >
           <Link
             to="/about"
-            className="h-12 md:h-14 px-7 bg-white text-black rounded-2xl inline-flex items-center text-lg md:text-xl font-medium hover:bg-neutral-200 transition-colors shadow-lg"
+            className="btn-press h-12 md:h-14 px-7 bg-white text-black rounded-2xl inline-flex items-center text-lg md:text-xl font-medium hover:bg-neutral-200 shadow-lg"
             style={sfPro}
           >
             About OTAM
           </Link>
           <Link
             to="/contact"
-            className="h-12 md:h-14 px-7 border border-white/40 text-white rounded-2xl inline-flex items-center text-lg md:text-xl font-medium hover:bg-white/10 transition-colors"
+            className="btn-press h-12 md:h-14 px-7 border border-white/40 text-white rounded-2xl inline-flex items-center text-lg md:text-xl font-medium hover:bg-white/10"
             style={sfPro}
           >
             Get in touch
@@ -204,7 +219,8 @@ function Hero() {
           style={sfPro}
         >
           <AnimatedWords
-            baseDelay={1.2}
+            baseDelay={0.95}
+            stepMs={35}
             text="OTAM is the national, independent, voluntary professional body for occupational therapists in Malawi — representing the profession, growing its people and connecting its partners."
           />
         </div>
@@ -212,7 +228,7 @@ function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.4, duration: 0.6 }}
+          transition={{ delay: 1.15, duration: 0.6 }}
           className="flex flex-row flex-wrap lg:flex-col items-center lg:items-end gap-2.5 w-full md:w-auto justify-end"
         >
           <div
@@ -241,9 +257,11 @@ function Hero() {
 function AnimatedWords({
   text,
   baseDelay,
+  stepMs = 35,
 }: {
   text: string;
   baseDelay: number;
+  stepMs?: number;
 }) {
   return (
     <>
@@ -254,7 +272,7 @@ function AnimatedWords({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
-            delay: baseDelay + i * 0.045,
+            delay: baseDelay + i * (stepMs / 1000),
             duration: 0.5,
             ease: "easeOut",
           }}
@@ -465,37 +483,48 @@ function PictureBoard() {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {PLACES.map((p, i) => (
-            <motion.article
+            <article
               key={p.title}
-              initial={{ opacity: 0, y: 36 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ delay: i * 0.12, duration: 0.6, ease: "easeOut" }}
               className="group flex flex-col gap-4"
             >
-              <div className="relative h-[260px] rounded-3xl overflow-hidden">
-                <img
-                  src={p.image}
-                  alt={p.title}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                />
-                <span
-                  className="absolute top-4 left-4 h-8 px-4 rounded-full bg-black/45 backdrop-blur-md text-white text-sm flex items-center"
-                  style={sfPro}
-                >
-                  {p.place}
-                </span>
-              </div>
+              <RevealImage
+                src={p.image}
+                alt={p.title}
+                className="h-[260px] rounded-3xl"
+                duration={0.9}
+                delay={i * 0.08}
+                hover
+                imgClassName="img-hover-zoom group-hover:saturate-[1.08]"
+                overlay={
+                  <span
+                    className="absolute top-4 left-4 h-8 px-4 rounded-full bg-black/45 backdrop-blur-md text-white text-sm flex items-center transition-colors duration-300 group-hover:bg-[#F0B429] group-hover:text-[#15221B] group-hover:shadow-[0_4px_16px_rgba(240,180,41,0.35)]"
+                    style={sfPro}
+                  >
+                    {p.place}
+                  </span>
+                }
+              />
               <div className="flex flex-col gap-1.5 px-1">
-                <h3 className="text-xl leading-snug text-[#15221B]" style={interTight}>
+                <motion.h3
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ delay: 0.45 + i * 0.08, duration: 0.5 }}
+                  className="text-xl leading-snug text-[#15221B]" style={interTight}
+                >
                   {p.title}
-                </h3>
-                <p className="text-[#15221B]/60 text-base leading-snug" style={sfPro}>
+                </motion.h3>
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ delay: 0.55 + i * 0.08, duration: 0.5 }}
+                  className="text-[#15221B]/60 text-base leading-snug" style={sfPro}
+                >
                   {p.note}
-                </p>
+                </motion.p>
               </div>
-            </motion.article>
+            </article>
           ))}
         </div>
       </div>
@@ -509,20 +538,12 @@ function WhatIsOt() {
   return (
     <section className="bg-[#F6F4EE] border-y border-black/5">
       <div className="max-w-[1360px] mx-auto px-6 md:px-12 py-24 grid gap-12 lg:grid-cols-2 items-center">
-        <motion.div
-          initial={{ opacity: 0, x: -28 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7 }}
-          className="relative h-[420px] rounded-[28px] overflow-hidden"
-        >
-          <img
-            src={A.otHands}
-            alt="Hands practising fine-motor therapy"
-            loading="lazy"
-            className="h-full w-full object-cover"
-          />
-        </motion.div>
+        <RevealImage
+          src={A.otHands}
+          alt="Hands practising fine-motor therapy"
+          className="h-[420px] rounded-[28px]"
+          duration={1.0}
+        />
 
         <div className="flex flex-col gap-6">
           <motion.h2
@@ -668,29 +689,30 @@ function Highlights() {
 
         <div className="grid gap-6 md:grid-cols-3">
           {HIGHLIGHTS.map((h, i) => (
-            <motion.article
+            <article
               key={h.title}
-              initial={{ opacity: 0, y: 36 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ delay: i * 0.14, duration: 0.65, ease: "easeOut" }}
               className="group flex flex-col gap-4"
             >
-              <div className="relative h-[300px] rounded-3xl overflow-hidden">
-                <img
-                  src={h.image}
-                  alt={h.title}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                />
-                <div className="absolute inset-0 bg-linear-to-t from-black/55 via-transparent to-transparent" />
-                <span
-                  className="absolute bottom-4 left-4 h-9 px-4 rounded-full bg-white/15 backdrop-blur-md text-white text-sm flex items-center tracking-[0.1em] uppercase"
-                  style={interTight}
-                >
-                  {h.tag}
-                </span>
-              </div>
+              <RevealImage
+                src={h.image}
+                alt={h.title}
+                className="h-[300px] rounded-3xl"
+                duration={0.9}
+                delay={i * 0.07}
+                hover
+                imgClassName="img-hover-zoom group-hover:saturate-[1.08]"
+                overlay={
+                  <>
+                    <div className="absolute inset-0 bg-linear-to-t from-black/55 via-transparent to-transparent" />
+                    <span
+                      className="absolute bottom-4 left-4 h-9 px-4 rounded-full bg-white/15 backdrop-blur-md text-white text-sm flex items-center tracking-[0.1em] uppercase transition-colors duration-300 group-hover:bg-[#F0B429] group-hover:text-[#15221B] group-hover:shadow-[0_4px_16px_rgba(240,180,41,0.35)]"
+                      style={interTight}
+                    >
+                      {h.tag}
+                    </span>
+                  </>
+                }
+              />
               <div className="flex flex-col gap-2 px-1 pb-2">
                 <h3 className="text-2xl text-[#15221B]" style={interTight}>
                   {h.title}
@@ -699,7 +721,7 @@ function Highlights() {
                   {h.body}
                 </p>
               </div>
-            </motion.article>
+            </article>
           ))}
         </div>
       </div>
@@ -734,7 +756,7 @@ function CtaBand() {
         >
           <Link
             to="/contact"
-            className="h-14 px-8 bg-white text-[#15221B] rounded-2xl inline-flex items-center text-xl font-medium hover:bg-neutral-100 transition-colors shadow-lg whitespace-nowrap"
+            className="btn-press h-14 px-8 bg-white text-[#15221B] rounded-2xl inline-flex items-center text-xl font-medium hover:bg-neutral-100 shadow-lg whitespace-nowrap"
             style={sfPro}
           >
             Contact the association

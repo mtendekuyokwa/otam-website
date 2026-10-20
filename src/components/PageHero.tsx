@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 import { SiteHeader } from "~/components/SiteHeader";
 
@@ -27,11 +27,19 @@ export function PageHero({
   image: string;
   children?: ReactNode;
 }) {
+  const reduce = useReducedMotion();
   return (
-    <section className="relative min-h-[62vh] w-full text-white flex flex-col justify-between p-6 md:p-12 overflow-hidden">
-      <div
+    <section className="relative min-h-[62vh] w-full text-white flex flex-col justify-between p-6 md:p-12 overflow-hidden bg-[#101B14]">
+      {/* backdrop opens like a window on load — image settles from a slight zoom */}
+      <motion.div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${image})` }}
+        initial={reduce ? undefined : { clipPath: "inset(0 0 100% 0)", scale: 1.15 }}
+        animate={reduce ? undefined : { clipPath: "inset(0 0 0 0)", scale: 1 }}
+        transition={{
+          clipPath: { duration: 1.0, ease: [0.77, 0, 0.175, 1] },
+          scale: { duration: 1.3, ease: [0.22, 1, 0.36, 1] },
+        }}
       />
       <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/50 to-black/80" />
 

@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { SiteFooter } from "~/components/SiteFooter";
 import { PageHero } from "~/components/PageHero";
+import { RevealImage } from "~/components/RevealImage";
 import { A } from "~/lib/assets";
 
 const interTight = { fontFamily: "'Inter Tight', sans-serif" } as const;
@@ -89,32 +90,30 @@ function Team() {
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mt-14">
             {COMMITTEE.map((m, i) => (
-              <motion.article
+              <article
                 key={m.name}
-                initial={{ opacity: 0, y: 32 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ delay: (i % 4) * 0.1, duration: 0.6, ease: "easeOut" }}
                 className="bg-white rounded-[28px] p-5 flex flex-col gap-4"
               >
-                <div className="relative h-[280px] rounded-2xl overflow-hidden">
-                  <img
-                    src={m.photo}
-                    alt={m.name}
-                    loading="lazy"
-                    className="h-full w-full object-cover"
-                  />
-                  <span
-                    className="absolute bottom-3 left-3 h-8 px-4 rounded-full bg-black/45 backdrop-blur-md text-white text-sm flex items-center"
-                    style={sfPro}
-                  >
-                    {m.role}
-                  </span>
-                </div>
+                <RevealImage
+                  src={m.photo}
+                  alt={m.name}
+                  className="h-[280px] rounded-2xl"
+                  duration={0.9}
+                  delay={(i % 4) * 0.07}
+                  hover
+                  overlay={
+                    <span
+                      className="absolute bottom-3 left-3 h-8 px-4 rounded-full bg-black/45 backdrop-blur-md text-white text-sm flex items-center transition-colors duration-300 group-hover:bg-[#F0B429] group-hover:text-[#15221B] group-hover:shadow-[0_4px_16px_rgba(240,180,41,0.35)]"
+                      style={sfPro}
+                    >
+                      {m.role}
+                    </span>
+                  }
+                />
                 <h3 className="text-xl leading-snug px-1 pb-1" style={interTight}>
                   {m.name}
                 </h3>
-              </motion.article>
+              </article>
             ))}
 
             {/* Join card */}
@@ -137,7 +136,7 @@ function Team() {
               </p>
               <Link
                 to="/contact"
-                className="h-12 px-6 rounded-full bg-white text-black text-lg font-medium hover:bg-neutral-100 transition-colors flex items-center justify-center w-fit"
+                className="btn-press h-12 px-6 rounded-full bg-white text-black text-lg font-medium hover:bg-neutral-100 flex items-center justify-center w-fit"
                 style={sfPro}
               >
                 Join OTAM

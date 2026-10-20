@@ -19,6 +19,7 @@ framer-motion and lucide-react.
 | `src/routes/__root.tsx`         | Root document shell (head, meta, fonts, styles)            |
 | `src/components/SiteHeader.tsx` | Shared nav (desktop pill nav + mobile menu)                |
 | `src/components/PageHero.tsx`   | Shared hero band for inner pages                           |
+| `src/components/RevealImage.tsx` | Reveal-window image effect (clip-path + settle zoom)       |
 | `src/components/SiteFooter.tsx` | Shared footer                                              |
 | `src/lib/assets.ts`             | Image map `A` — photography hotlinked from pexels.com      |
 | `public/otam.svg`               | OTAM rising-sun mark (logo/favicon)                        |

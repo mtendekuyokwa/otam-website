@@ -10,3 +10,95 @@ body {
   color: #15221b;
 }
 
+/* ————— Motion tokens (from skills.sh: emilkowalski/review-animations) ————— */
+:root {
+  /* strong ease-out for entrances — starts fast, feels responsive */
+  --ease-express: cubic-bezier(0.22, 1, 0.36, 1);
+  /* strong ease-in-out for on-screen movement (clip reveals) */
+  --ease-glide: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* Button press feedback: scale(0.97) at 160ms, never fully disappears */
+.btn-press {
+  transition:
+    transform 160ms var(--ease-express),
+    background-color 160ms ease,
+    color 160ms ease;
+}
+.btn-press:active {
+  transform: scale(0.97);
+}
+
+/* Honour reduced motion: drop movement, keep opacity */
+@media (prefers-reduced-motion: reduce) {
+  .btn-press,
+  .btn-press:active {
+    transition: background-color 160ms ease, color 160ms ease;
+    transform: none;
+  }
+}
+
+/* Image hover zoom — gated so touch never fires a false hover on tap */
+@media (hover: hover) and (pointer: fine) {
+  .img-hover-zoom {
+    transition: transform 700ms var(--ease-express);
+  }
+  .group:hover .img-hover-zoom {
+    transform: scale(1.04);
+  }
+}
+
+/* ————— Living window (hover state for RevealImage) —————
+   Rising-sun wash + gold hairline frame. Transform/opacity only. */
+
+/* the sun rises from below the window: opacity + rise-in on the same frame */
+.img-wash {
+  background: radial-gradient(
+    120% 90% at 50% 115%,
+    rgba(240, 180, 41, 0.3) 0%,
+    rgba(212, 89, 59, 0.18) 45%,
+    rgba(0, 0, 0, 0) 72%
+  );
+  opacity: 0;
+  transform: translateY(14%);
+  transition:
+    opacity 450ms var(--ease-express),
+    transform 900ms var(--ease-glide);
+  will-change: transform, opacity;
+}
+
+/* the window frame draws itself closed around the glass */
+.img-frame {
+  border: 1px solid rgba(240, 180, 41, 0.8);
+  border-radius: inherit;
+  opacity: 0;
+  transform: scale(1.035);
+  transition:
+    opacity 350ms var(--ease-express),
+    transform 700ms var(--ease-glide);
+  will-change: transform, opacity;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .img-wash {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .group:hover .img-frame {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Reduced motion: keep the state change (opacity), drop the movement */
+@media (prefers-reduced-motion: reduce) {
+  .img-wash {
+    transform: none;
+    transition: opacity 300ms ease;
+  }
+  .img-frame {
+    transform: none;
+    transition: opacity 250ms ease;
+  }
+}
+

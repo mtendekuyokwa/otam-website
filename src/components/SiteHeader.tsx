@@ -92,7 +92,7 @@ export function SiteHeader() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.25 }}
-              className="absolute top-full right-0 mt-3 w-60 bg-black/70 backdrop-blur-lg rounded-2xl p-4 flex flex-col gap-3"
+              className="absolute top-full right-0 mt-3 w-60 origin-top-right bg-black/70 backdrop-blur-lg rounded-2xl p-4 flex flex-col gap-3"
             >
               {NAV_LINKS.map(({ label, to }) => (
                 <Link
