@@ -237,17 +237,22 @@ function Hero() {
           >
             Health · Education · Social sectors
           </div>
-          <div className="flex items-center gap-2">
-            <div className="h-[56px] w-[56px] rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shrink-0 text-[#F0B429]">
-              <ArrowUpRight className="w-6 h-6" />
-            </div>
-            <div
-              className="h-[56px] px-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-xl flex items-center whitespace-nowrap"
+          <Link
+            to="/blog/$slug"
+            params={{ slug: "national-conference-2026" }}
+            aria-label="Read the blog story: OTAM's first national conference — first of its kind"
+            className="btn-press group flex items-center gap-2 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F0B429] hover:drop-shadow-[0_6px_20px_rgba(240,180,41,0.25)] transition-[filter] duration-300"
+          >
+            <span className="h-[56px] w-[56px] rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shrink-0 text-[#F0B429] transition-colors duration-300 group-hover:border-[#F0B429]/60">
+              <ArrowUpRight className="w-6 h-6 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </span>
+            <span
+              className="h-[56px] px-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-xl flex items-center whitespace-nowrap transition-colors duration-300 group-hover:border-[#F0B429]/60"
               style={sfPro}
             >
               Conference 2026 · First of its kind
-            </div>
-          </div>
+            </span>
+          </Link>
         </motion.div>
       </footer>
     </section>
