@@ -6,6 +6,7 @@ import {
   useSpring,
 } from "framer-motion";
 import type { ReactNode, MouseEvent } from "react";
+import { useEffect, useState } from "react";
 
 /** Matches the tokens in src/styles.css */
 const EASE_EXPRESS = [0.22, 1, 0.36, 1] as const;
@@ -58,7 +59,11 @@ export function RevealImage({
   const loading = eager ? "eager" : "lazy";
 
   /* ————— living-window hover (fine pointers only, never reduced-motion) ————— */
-  const parallaxOn = hover && !reduce && canFineHover();
+  /* Resolved after mount so SSR and the first client render agree (hydration). */
+  const [parallaxOn, setParallaxOn] = useState(false);
+  useEffect(() => {
+    setParallaxOn(hover && !reduce && canFineHover());
+  }, [hover, reduce]);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const springConfig = { stiffness: 130, damping: 18, mass: 0.35 };
