@@ -14,16 +14,16 @@ export const A = {
   logo: "/otam-logo.jpg", // official OTAM mark (from the association)
 
   /* ————— Imagery ————— */
-  hero: px(30678208, 2000), // clinician working with a patient in clinic
-  otHands: px(30483024, 1400), // hands manipulating therapy putty
-  rehab: px(30688589, 1400), // clinician supporting a patient's arm
-  childCare: px(34185202, 1400), // caring for a child
+  hero: px(30677591, 2000), // African clinician consulting a patient in clinic
+  otHands: px(32405949, 1400), // African woman beading — fine-motor craft activity
+  rehab: px(35142161, 1400), // amputee footballers on crutches — rehab through sport
+  childCare: px(30110240, 1400), // mother and baby in kitenge — pediatric care
   classroom: px(25457343, 1400), // children at school desks
-  lectureHall: px(27769510, 1600), // conference / CPD audience
+  lectureHall: px(30803493, 1600), // conference stage / CPD event
   students: px(28593051, 1400), // smiling students in uniform
-  village: px(25228112, 1600), // village street scene
-  community: px(16241834, 1400), // people smiling together
-  outreach: px(18057138, 1400), // community seated outdoors
+  village: px(11770775, 1600), // assistive technology (homemade mobility device) in the community
+  community: px(13917189, 1400), // people smiling together
+  outreach: px(39726362, 1400), // child pushing a friend in a wheelchair — school programme
 
   /* ————— Team placeholder portraits ————— */
   pSally: px(18828741), // Sally Palmer — President
@@ -31,7 +31,7 @@ export const A = {
   pJohn: px(33048698), // John Khonje — Secretary
   pCanaan: px(11189139), // Canaan Zimba — Vice Secretary
   pChiwemi: px(19578019), // Chiwemi Manduwa — Treasurer
-  pTessie: px(18252404), // Tessie Kalobekamo — Committee Member
+  pTessie: px(33674901), // Tessie Kalobekamo — Committee Member
   pOsman: px(28426641), // Osman Mdala — Committee Member
 } as const;
 

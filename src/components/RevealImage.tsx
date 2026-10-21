@@ -4,9 +4,10 @@ import {
   useMotionTemplate,
   useReducedMotion,
   useSpring,
+  useInView,
 } from "framer-motion";
 import type { ReactNode, MouseEvent } from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /** Matches the tokens in src/styles.css */
 const EASE_EXPRESS = [0.22, 1, 0.36, 1] as const;
@@ -58,6 +59,15 @@ export function RevealImage({
   const reduce = useReducedMotion();
   const loading = eager ? "eager" : "lazy";
 
+  /* Observe an unclipped wrapper: clip-path (initial or on an ancestor)
+   * zeroes an element's IntersectionObserver ratio in Chromium, so a
+   * whileInView / useInView on the clipped layer itself would never fire. */
+  const viewRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(viewRef, { once: true, amount: 0.25 });
+
+  /* Rounding token so the clipped layer keeps the corner radii */
+  const rounded = className.match(/rounded-\S+/)?.[0] ?? "";
+
   /* ————— living-window hover (fine pointers only, never reduced-motion) ————— */
   /* Resolved after mount so SSR and the first client render agree (hydration). */
   const [parallaxOn, setParallaxOn] = useState(false);
@@ -103,45 +113,48 @@ export function RevealImage({
   }
 
   return (
-    <motion.div
-      className={`relative overflow-hidden ${className}`}
+    <div
+      ref={viewRef}
+      className={`relative ${className}`}
       onMouseMove={parallaxOn ? handleMouseMove : undefined}
       onMouseLeave={parallaxOn ? handleMouseLeave : undefined}
-      initial={{ clipPath: "inset(100% 0 0 0)" }}
-      whileInView={{ clipPath: "inset(0 0 0 0)" }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration, ease: EASE_GLIDE, delay }}
     >
-      {/* settle zoom layer (entrance only) */}
       <motion.div
-        className="h-full w-full"
-        initial={{ scale: 1.25 }}
-        whileInView={{ scale: 1 }}
-        viewport={{ once: true, amount: 0.25 }}
-        transition={{ duration: duration + 0.15, ease: EASE_EXPRESS, delay }}
+        className={`absolute inset-0 overflow-hidden ${rounded}`}
+        initial={{ clipPath: "inset(100% 0 0 0)" }}
+        animate={{ clipPath: inView ? "inset(0 0 0 0)" : "inset(100% 0 0 0)" }}
+        transition={{ duration, ease: EASE_GLIDE, delay }}
       >
-        {/* cursor parallax layer (springs retarget mid-flight and glide home on leave) */}
+        {/* settle zoom layer (entrance only) */}
         <motion.div
-          className={`h-full w-full ${parallaxOn ? "will-change-transform" : ""}`}
-          style={parallaxOn ? { transform: parallaxTransform } : undefined}
+          className="h-full w-full"
+          initial={{ scale: 1.25 }}
+          animate={{ scale: inView ? 1 : 1.25 }}
+          transition={{ duration: duration + 0.15, ease: EASE_EXPRESS, delay }}
         >
-          <img
-            src={src}
-            alt={alt}
-            loading={loading}
-            className={`h-full w-full object-cover ${imgClassName}`}
-          />
+          {/* cursor parallax layer (springs retarget mid-flight and glide home on leave) */}
+          <motion.div
+            className={`h-full w-full ${parallaxOn ? "will-change-transform" : ""}`}
+            style={parallaxOn ? { transform: parallaxTransform } : undefined}
+          >
+            <img
+              src={src}
+              alt={alt}
+              loading={loading}
+              className={`h-full w-full object-cover ${imgClassName}`}
+            />
+          </motion.div>
         </motion.div>
+
+        {hover ? (
+          <>
+            <span className="img-wash pointer-events-none absolute inset-0" aria-hidden />
+            <span className="img-frame pointer-events-none absolute inset-2" aria-hidden />
+          </>
+        ) : null}
+
+        {overlay}
       </motion.div>
-
-      {hover ? (
-        <>
-          <span className="img-wash pointer-events-none absolute inset-0" aria-hidden />
-          <span className="img-frame pointer-events-none absolute inset-2" aria-hidden />
-        </>
-      ) : null}
-
-      {overlay}
-    </motion.div>
+    </div>
   );
 }
