@@ -4,6 +4,7 @@ import { motion, useMotionValue, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import {
   Accessibility,
+  ArrowRight,
   ArrowUpRight,
   Baby,
   Brain,
@@ -174,8 +175,39 @@ function Hero() {
 
       <SiteHeader />
 
-      {/* Center content */}
-      <div className="w-full max-w-[900px] mx-auto flex flex-col justify-center items-center gap-5 sm:gap-6 md:gap-8 text-center my-auto z-10 px-2 sm:px-4">
+      {/* Rising-sun arcs — a faint echo of the OTAM mark behind the mobile poster */}
+      <motion.svg
+        aria-hidden
+        viewBox="0 0 620 220"
+        fill="none"
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[620px] max-w-none pointer-events-none z-[5]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.25 }}
+        transition={{ delay: 0.9, duration: 1.4, ease: "easeOut" }}
+      >
+        {[212, 168, 124, 80, 36].map((r) => (
+          <circle key={r} cx="310" cy="236" r={r} stroke="#F0B429" strokeWidth="1.5" />
+        ))}
+      </motion.svg>
+
+      {/* Content — mobile: bottom-anchored editorial poster; sm+: centered stack */}
+      <div className="w-full flex flex-col justify-end items-start gap-2.5 text-left mb-4 mt-auto z-10 sm:my-auto sm:mb-0 sm:max-w-[900px] sm:mx-auto sm:justify-center sm:items-center sm:gap-6 md:gap-8 sm:text-center sm:px-4">
+        {/* Mobile kicker: gold rule + line */}
+        <motion.span
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15, duration: 0.55 }}
+          className="sm:hidden inline-flex items-center gap-3"
+        >
+          <span className="h-px w-9 rounded-full bg-[#F0B429] shrink-0" />
+          <span
+            className="text-[10px] tracking-[0.3em] uppercase text-white/70"
+            style={interTight}
+          >
+            National professional body
+          </span>
+        </motion.span>
+
         {/* sm+ pill */}
         <motion.span
           initial={{ opacity: 0, y: 10 }}
@@ -188,7 +220,7 @@ function Hero() {
         </motion.span>
 
         <h1
-          className="text-white font-normal tracking-tight flex flex-col items-center justify-center gap-1 sm:gap-3"
+          className="text-white font-normal tracking-tight flex flex-col items-start sm:items-center justify-center gap-2 sm:gap-3"
           style={interTight}
         >
           <motion.span
@@ -200,12 +232,12 @@ function Hero() {
             Helping every Malawian
           </motion.span>
           <motion.span
-            className="block text-[#F0B429] text-[34px] sm:text-[54px] md:text-[68px] lg:text-[76px] leading-[1.05]"
+            className="block text-[#F0B429] text-[42px] sm:text-[54px] md:text-[68px] lg:text-[76px] leading-[1.04]"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            <span className="italic" style={playfair}>
+            <span className="italic whitespace-nowrap" style={playfair}>
               do, be &amp; belong
             </span>
           </motion.span>
@@ -223,18 +255,19 @@ function Hero() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.5 }}
-          className="flex flex-nowrap justify-center items-stretch gap-2 sm:gap-3 w-full max-w-[440px] mx-auto sm:max-w-none"
+          className="flex flex-nowrap justify-center items-stretch gap-2 sm:gap-3 w-full max-w-[440px] mx-auto sm:max-w-none mt-2 sm:mt-0"
         >
           <Link
             to="/about"
-            className="btn-press h-11 sm:h-12 md:h-14 flex-1 sm:flex-none px-4 sm:px-7 bg-white text-black rounded-2xl flex items-center justify-center whitespace-nowrap text-sm sm:text-lg md:text-xl font-medium hover:bg-neutral-200 shadow-lg"
+            className="btn-press h-11 sm:h-12 md:h-14 flex-1 sm:flex-none px-4 sm:px-7 bg-white text-black rounded-2xl flex items-center justify-center gap-1.5 whitespace-nowrap text-sm sm:text-lg md:text-xl font-medium hover:bg-neutral-200 shadow-lg"
             style={sfPro}
           >
             About OTAM
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.25} />
           </Link>
           <Link
             to="/contact"
-            className="btn-press h-11 sm:h-12 md:h-14 flex-1 sm:flex-none px-4 sm:px-7 border border-white/40 text-white rounded-2xl flex items-center justify-center whitespace-nowrap text-sm sm:text-lg md:text-xl font-medium hover:bg-white/10"
+            className="btn-press h-11 sm:h-12 md:h-14 flex-1 sm:flex-none px-4 sm:px-7 border border-white/40 bg-white/5 backdrop-blur-sm text-white rounded-2xl flex items-center justify-center whitespace-nowrap text-sm sm:text-lg md:text-xl font-medium hover:bg-white/10"
             style={sfPro}
           >
             Get in touch
@@ -243,9 +276,9 @@ function Hero() {
       </div>
 
       {/* Hero footer */}
-      <footer className="w-full max-w-[1360px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-6 z-10">
+      <footer className="w-full max-w-[1360px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-4 sm:gap-6 z-10 relative">
         <div
-          className="w-full md:w-[480px] max-w-prose text-white/75 sm:text-white/80 text-[15px] sm:text-xl leading-[1.5] sm:leading-[1.35] text-left"
+          className="w-full md:w-[480px] max-w-prose text-white/75 sm:text-white/80 text-[15px] sm:text-xl leading-[1.5] sm:leading-[1.35] text-left border-l-2 border-[#F0B429]/60 pl-3 sm:pl-0 sm:border-0"
           style={sfPro}
         >
           <AnimatedWords
@@ -259,10 +292,10 @@ function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.15, duration: 0.6 }}
-          className="flex flex-row flex-wrap lg:flex-col items-center lg:items-end gap-2.5 w-full md:w-auto justify-end"
+          className="flex flex-col sm:flex-row lg:flex-col sm:items-center lg:items-end gap-2.5 w-full md:w-auto"
         >
           <div
-            className="min-h-[44px] sm:min-h-[56px] h-auto py-1.5 sm:py-2 px-4 sm:px-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm sm:text-xl flex items-center whitespace-normal sm:whitespace-nowrap"
+            className="hidden sm:flex min-h-[44px] sm:min-h-[56px] h-auto py-1.5 sm:py-2 px-4 sm:px-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm sm:text-xl flex items-center whitespace-normal sm:whitespace-nowrap"
             style={sfPro}
           >
             Health · Education · Social sectors
@@ -271,13 +304,13 @@ function Hero() {
             to="/blog/$slug"
             params={{ slug: "national-conference-2026" }}
             aria-label="Read the blog story: OTAM's first national conference — first of its kind"
-            className="btn-press group flex items-center gap-2 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F0B429] hover:drop-shadow-[0_6px_20px_rgba(240,180,41,0.25)] transition-[filter] duration-300"
+            className="btn-press group flex items-center gap-2 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F0B429] hover:drop-shadow-[0_6px_20px_rgba(240,180,41,0.25)] transition-[filter] duration-300 w-full sm:w-auto"
           >
             <span className="h-[44px] sm:h-[56px] w-[44px] sm:w-[56px] rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shrink-0 text-[#F0B429] transition-colors duration-300 group-hover:border-[#F0B429]/60">
               <ArrowUpRight className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </span>
             <span
-              className="min-h-[44px] sm:min-h-[56px] h-auto py-1.5 sm:py-2 px-4 sm:px-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm sm:text-xl flex items-center whitespace-normal sm:whitespace-nowrap transition-colors duration-300 group-hover:border-[#F0B429]/60"
+              className="min-h-[44px] sm:min-h-[56px] h-auto py-1.5 sm:py-2 px-4 sm:px-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm sm:text-xl flex flex-1 sm:flex-none items-center justify-center whitespace-normal sm:whitespace-nowrap transition-colors duration-300 group-hover:border-[#F0B429]/60"
               style={sfPro}
             >
               Conference 2026 · First of its kind
