@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { motion, useReducedMotion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion, useMotionValue, useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import {
   Accessibility,
   ArrowUpRight,
@@ -176,24 +176,6 @@ function Hero() {
 
       {/* Center content */}
       <div className="w-full max-w-[900px] mx-auto flex flex-col justify-center items-center gap-6 md:gap-8 text-center my-auto z-10 px-4">
-        {/* Mobile pill: compact glass chip with a gold status dot */}
-        <motion.span
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15, duration: 0.55 }}
-          className="sm:hidden h-auto max-w-full py-2 pl-3 pr-4 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white/85 text-[10px] leading-relaxed flex items-center gap-2 justify-center text-center tracking-[0.14em] uppercase"
-          style={interTight}
-        >
-          <span
-            className="w-1.5 h-1.5 rounded-full bg-[#F0B429] shrink-0"
-            style={{
-              boxShadow: "0 0 10px rgba(240,180,41,0.65)",
-            }}
-            aria-hidden
-          />
-          Occupational Therapy Association of Malawi
-        </motion.span>
-
         {/* sm+ pill */}
         <motion.span
           initial={{ opacity: 0, y: 10 }}
@@ -206,11 +188,11 @@ function Hero() {
         </motion.span>
 
         <h1
-          className="text-white text-[44px] sm:text-[64px] md:text-[76px] lg:text-[84px] font-normal leading-[1.04] tracking-tight"
+          className="text-white font-normal leading-[1.04] tracking-tight flex flex-col items-center justify-center gap-1 sm:gap-3"
           style={interTight}
         >
           <motion.span
-            className="block"
+            className="block text-white/80 text-[17px] leading-[1.45] tracking-[0.01em] font-light sm:text-[28px] sm:tracking-tight md:text-[32px] lg:text-[38px]"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.6 }}
@@ -218,7 +200,7 @@ function Hero() {
             Helping every Malawian
           </motion.span>
           <motion.span
-            className="block text-[#F0B429]"
+            className="block text-[#F0B429] text-[40px] sm:text-[56px] md:text-[68px] lg:text-[76px] leading-[1.05]"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
@@ -228,7 +210,7 @@ function Hero() {
             </span>
           </motion.span>
           <motion.span
-            className="block"
+            className="block text-white/80 text-[17px] leading-[1.45] tracking-[0.01em] font-light sm:text-[28px] sm:tracking-tight md:text-[32px] lg:text-[38px]"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
@@ -337,6 +319,143 @@ function AnimatedWords({
   );
 }
 
+/* ———————————————————————— Affiliates ticker (mobile/tablet) ———————————————————————— */
+
+const TICKER_LOOP_SECONDS = 45; // one full pass — deliberately slow
+
+function TickerCard({
+  affiliate: a,
+  focusable = true,
+}: {
+  affiliate: Affiliate;
+  focusable?: boolean;
+}) {
+  return (
+    <a
+      href={a.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={a.name}
+      tabIndex={focusable ? 0 : -1}
+      className="hover:-translate-y-1 transition-transform duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F0B429] rounded-2xl shrink-0 touch-pan-y select-none"
+      draggable={false}
+    >
+      <div
+        className={`w-[210px] h-24 sm:w-[240px] sm:h-28 rounded-2xl flex items-center justify-center p-5 ${
+          a.dark ? "bg-[#1E6E4F]" : "bg-white"
+        }`}
+      >
+        <img
+          src={a.logo}
+          alt={`${a.name} logo`}
+          loading="lazy"
+          draggable={false}
+          className={
+            a.dark
+              ? "max-h-full max-w-full object-contain"
+              : "max-h-14 w-auto max-w-full object-contain"
+          }
+        />
+      </div>
+    </a>
+  );
+}
+
+function AffiliatesTicker() {
+  const reduce = useReducedMotion();
+  const dragging = useRef(false);
+  const movedRef = useRef(false); // suppress clicks right after a drag
+  const chunkRef = useRef<HTMLDivElement>(null);
+  const [half, setHalf] = useState(0);
+  const x = useMotionValue(0);
+
+  /* Measure one copy of the list; the loop wraps at -half. */
+  useEffect(() => {
+    const measure = () => {
+      if (chunkRef.current) setHalf(chunkRef.current.offsetWidth);
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
+  /* Seamless wrap in both directions while dragging. */
+  useEffect(() => {
+    return x.on("change", (v) => {
+      if (half > 0 && v <= -half) x.set(v + half);
+      else if (half > 0 && v > 0) x.set(v - half);
+    });
+  }, [half, x]);
+
+  /* Auto-drift: slow constant crawl, paused while the user drags. */
+  useEffect(() => {
+    if (reduce || half === 0) return;
+    let raf = 0;
+    let last = performance.now();
+    const speed = half / TICKER_LOOP_SECONDS; // px per second
+    const step = (now: number) => {
+      const dt = Math.min((now - last) / 1000, 0.05);
+      last = now;
+      if (!dragging.current) {
+        let v = x.get() - speed * dt;
+        if (v <= -half) x.set(v + half); // x.set also fires the wrap guard
+        else x.set(v);
+      }
+      raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [reduce, half, x]);
+
+  return (
+    <div
+      className="lg:hidden -mx-6 md:-mx-12 py-2 relative overflow-hidden"
+      style={{
+        maskImage:
+          "linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent)",
+        WebkitMaskImage:
+          "linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent)",
+      }}
+    >
+      <motion.div
+        className="flex w-max cursor-grab active:cursor-grabbing"
+        style={{ x }}
+        drag="x"
+        dragConstraints={{ left: -half || -1, right: 0 }}
+        dragElastic={0.06}
+        onDragStart={() => {
+          dragging.current = true;
+          movedRef.current = true;
+        }}
+        onDragEnd={() => {
+          dragging.current = false;
+          /* the click event of a swipe lands right after dragend */
+          setTimeout(() => {
+            movedRef.current = false;
+          }, 120);
+        }}
+        onClickCapture={(e) => {
+          if (movedRef.current) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
+      >
+        <div ref={chunkRef} className="flex gap-5 pr-5 shrink-0">
+          {AFFILIATES.map((a) => (
+            <TickerCard key={a.short} affiliate={a} />
+          ))}
+        </div>
+        <div aria-hidden className="flex gap-5 pr-5 shrink-0">
+          {AFFILIATES.map((a) => (
+            <TickerCard key={`dup-${a.short}`} affiliate={a} focusable={false} />
+          ))}
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
 /* ———————————————————————— Affiliates strip ———————————————————————— */
 
 function AffiliatesStrip() {
@@ -373,7 +492,9 @@ function AffiliatesStrip() {
           </p>
         </div>
 
-        <div className="grid gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-5">
+        {/* Ticker below desktop, grid on desktop */}
+        <AffiliatesTicker />
+        <div className="hidden lg:grid grid-cols-5 gap-x-5 gap-y-8">
           {AFFILIATES.map(({ name, short, logo, href, role, dark }, i) => (
             <motion.a
               key={short}
