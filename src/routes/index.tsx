@@ -128,7 +128,7 @@ function Hero() {
   }, [reduce]);
 
   return (
-    <section className="relative min-h-screen w-full text-white flex flex-col justify-between p-6 md:p-12 overflow-hidden bg-[#101B14]">
+    <section className="relative min-h-[100svh] w-full text-white flex flex-col justify-between p-5 sm:p-6 md:p-12 overflow-hidden bg-[#101B14]">
       {/* backdrop opens like a window on load, then lives — Malawian practice
           scenes slowly crossfade while each one drifts on a mirror-zoom */}
       <motion.div
@@ -175,7 +175,7 @@ function Hero() {
       <SiteHeader />
 
       {/* Center content */}
-      <div className="w-full max-w-[900px] mx-auto flex flex-col justify-center items-center gap-6 md:gap-8 text-center my-auto z-10 px-4">
+      <div className="w-full max-w-[900px] mx-auto flex flex-col justify-center items-center gap-5 sm:gap-6 md:gap-8 text-center my-auto z-10 px-2 sm:px-4">
         {/* sm+ pill */}
         <motion.span
           initial={{ opacity: 0, y: 10 }}
@@ -188,11 +188,11 @@ function Hero() {
         </motion.span>
 
         <h1
-          className="text-white font-normal leading-[1.04] tracking-tight flex flex-col items-center justify-center gap-1 sm:gap-3"
+          className="text-white font-normal tracking-tight flex flex-col items-center justify-center gap-1 sm:gap-3"
           style={interTight}
         >
           <motion.span
-            className="block text-white/80 text-[17px] leading-[1.45] tracking-[0.01em] font-light sm:text-[28px] sm:tracking-tight md:text-[32px] lg:text-[38px]"
+            className="block text-white/80 text-[15px] leading-[1.5] tracking-[0.02em] font-light sm:text-[26px] sm:tracking-tight md:text-[32px] lg:text-[38px]"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.6 }}
@@ -200,7 +200,7 @@ function Hero() {
             Helping every Malawian
           </motion.span>
           <motion.span
-            className="block text-[#F0B429] text-[40px] sm:text-[56px] md:text-[68px] lg:text-[76px] leading-[1.05]"
+            className="block text-[#F0B429] text-[34px] sm:text-[54px] md:text-[68px] lg:text-[76px] leading-[1.05]"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
@@ -210,7 +210,7 @@ function Hero() {
             </span>
           </motion.span>
           <motion.span
-            className="block text-white/80 text-[17px] leading-[1.45] tracking-[0.01em] font-light sm:text-[28px] sm:tracking-tight md:text-[32px] lg:text-[38px]"
+            className="block text-white/80 text-[15px] leading-[1.5] tracking-[0.02em] font-light sm:text-[26px] sm:tracking-tight md:text-[32px] lg:text-[38px]"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
@@ -227,14 +227,14 @@ function Hero() {
         >
           <Link
             to="/about"
-            className="btn-press h-11 sm:h-12 md:h-14 flex-1 sm:flex-none px-4 sm:px-7 bg-white text-black rounded-2xl flex items-center justify-center whitespace-nowrap text-base sm:text-lg md:text-xl font-medium hover:bg-neutral-200 shadow-lg"
+            className="btn-press h-11 sm:h-12 md:h-14 flex-1 sm:flex-none px-4 sm:px-7 bg-white text-black rounded-2xl flex items-center justify-center whitespace-nowrap text-sm sm:text-lg md:text-xl font-medium hover:bg-neutral-200 shadow-lg"
             style={sfPro}
           >
             About OTAM
           </Link>
           <Link
             to="/contact"
-            className="btn-press h-11 sm:h-12 md:h-14 flex-1 sm:flex-none px-4 sm:px-7 border border-white/40 text-white rounded-2xl flex items-center justify-center whitespace-nowrap text-base sm:text-lg md:text-xl font-medium hover:bg-white/10"
+            className="btn-press h-11 sm:h-12 md:h-14 flex-1 sm:flex-none px-4 sm:px-7 border border-white/40 text-white rounded-2xl flex items-center justify-center whitespace-nowrap text-sm sm:text-lg md:text-xl font-medium hover:bg-white/10"
             style={sfPro}
           >
             Get in touch
@@ -245,7 +245,7 @@ function Hero() {
       {/* Hero footer */}
       <footer className="w-full max-w-[1360px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-6 z-10">
         <div
-          className="w-full md:w-[480px] max-w-prose text-white/80 text-xl leading-[1.35] text-left"
+          className="w-full md:w-[480px] max-w-prose text-white/75 sm:text-white/80 text-[15px] sm:text-xl leading-[1.5] sm:leading-[1.35] text-left"
           style={sfPro}
         >
           <AnimatedWords
@@ -262,7 +262,7 @@ function Hero() {
           className="flex flex-row flex-wrap lg:flex-col items-center lg:items-end gap-2.5 w-full md:w-auto justify-end"
         >
           <div
-            className="min-h-[56px] h-auto py-2 px-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-base sm:text-xl flex items-center whitespace-normal sm:whitespace-nowrap"
+            className="min-h-[44px] sm:min-h-[56px] h-auto py-1.5 sm:py-2 px-4 sm:px-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm sm:text-xl flex items-center whitespace-normal sm:whitespace-nowrap"
             style={sfPro}
           >
             Health · Education · Social sectors
@@ -273,11 +273,11 @@ function Hero() {
             aria-label="Read the blog story: OTAM's first national conference — first of its kind"
             className="btn-press group flex items-center gap-2 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F0B429] hover:drop-shadow-[0_6px_20px_rgba(240,180,41,0.25)] transition-[filter] duration-300"
           >
-            <span className="h-[56px] w-[56px] rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shrink-0 text-[#F0B429] transition-colors duration-300 group-hover:border-[#F0B429]/60">
-              <ArrowUpRight className="w-6 h-6 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <span className="h-[44px] sm:h-[56px] w-[44px] sm:w-[56px] rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shrink-0 text-[#F0B429] transition-colors duration-300 group-hover:border-[#F0B429]/60">
+              <ArrowUpRight className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </span>
             <span
-              className="min-h-[56px] h-auto py-2 px-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-base sm:text-xl flex items-center whitespace-normal sm:whitespace-nowrap transition-colors duration-300 group-hover:border-[#F0B429]/60"
+              className="min-h-[44px] sm:min-h-[56px] h-auto py-1.5 sm:py-2 px-4 sm:px-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm sm:text-xl flex items-center whitespace-normal sm:whitespace-nowrap transition-colors duration-300 group-hover:border-[#F0B429]/60"
               style={sfPro}
             >
               Conference 2026 · First of its kind
