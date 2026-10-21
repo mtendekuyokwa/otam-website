@@ -221,10 +221,10 @@ function About() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ delay: i * 0.08, duration: 0.45 }}
-                className="h-12 px-6 rounded-full bg-[#2E7D5B]/8 border border-[#2E7D5B]/20 flex items-center gap-2.5 text-[#15221B]/80 text-lg"
+                className="min-h-12 h-auto py-2 px-6 rounded-full bg-[#2E7D5B]/8 border border-[#2E7D5B]/20 flex items-center gap-2.5 text-[#15221B]/80 text-base sm:text-lg whitespace-normal"
                 style={sfPro}
               >
-                <HandHeart className="w-4.5 h-4.5 text-[#2E7D5B]" />
+                <HandHeart className="w-4.5 h-4.5 text-[#2E7D5B] shrink-0" />
                 {v}
               </motion.span>
             ))}

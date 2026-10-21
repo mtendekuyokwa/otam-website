@@ -176,11 +176,30 @@ function Hero() {
 
       {/* Center content */}
       <div className="w-full max-w-[900px] mx-auto flex flex-col justify-center items-center gap-6 md:gap-8 text-center my-auto z-10 px-4">
+        {/* Mobile pill: compact glass chip with a gold status dot */}
         <motion.span
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.55 }}
-          className="h-9 px-5 rounded-full border border-white/40 text-white/80 text-sm flex items-center tracking-[0.14em] uppercase"
+          className="sm:hidden h-auto max-w-full py-2 pl-3 pr-4 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white/85 text-[10px] leading-relaxed flex items-center gap-2 justify-center text-center tracking-[0.14em] uppercase"
+          style={interTight}
+        >
+          <span
+            className="w-1.5 h-1.5 rounded-full bg-[#F0B429] shrink-0"
+            style={{
+              boxShadow: "0 0 10px rgba(240,180,41,0.65)",
+            }}
+            aria-hidden
+          />
+          Occupational Therapy Association of Malawi
+        </motion.span>
+
+        {/* sm+ pill */}
+        <motion.span
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15, duration: 0.55 }}
+          className="hidden sm:inline-flex min-h-9 h-auto max-w-full py-1.5 px-5 rounded-full border border-white/40 text-white/80 text-sm flex items-center justify-center text-center tracking-[0.14em] uppercase whitespace-normal"
           style={interTight}
         >
           Occupational Therapy Association of Malawi
@@ -222,18 +241,18 @@ function Hero() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.5 }}
-          className="flex flex-wrap justify-center gap-3"
+          className="flex flex-nowrap justify-center items-stretch gap-2 sm:gap-3 w-full max-w-[440px] mx-auto sm:max-w-none"
         >
           <Link
             to="/about"
-            className="btn-press h-12 md:h-14 px-7 bg-white text-black rounded-2xl inline-flex items-center text-lg md:text-xl font-medium hover:bg-neutral-200 shadow-lg"
+            className="btn-press h-11 sm:h-12 md:h-14 flex-1 sm:flex-none px-4 sm:px-7 bg-white text-black rounded-2xl flex items-center justify-center whitespace-nowrap text-base sm:text-lg md:text-xl font-medium hover:bg-neutral-200 shadow-lg"
             style={sfPro}
           >
             About OTAM
           </Link>
           <Link
             to="/contact"
-            className="btn-press h-12 md:h-14 px-7 border border-white/40 text-white rounded-2xl inline-flex items-center text-lg md:text-xl font-medium hover:bg-white/10"
+            className="btn-press h-11 sm:h-12 md:h-14 flex-1 sm:flex-none px-4 sm:px-7 border border-white/40 text-white rounded-2xl flex items-center justify-center whitespace-nowrap text-base sm:text-lg md:text-xl font-medium hover:bg-white/10"
             style={sfPro}
           >
             Get in touch
@@ -261,7 +280,7 @@ function Hero() {
           className="flex flex-row flex-wrap lg:flex-col items-center lg:items-end gap-2.5 w-full md:w-auto justify-end"
         >
           <div
-            className="h-[56px] px-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-xl flex items-center whitespace-nowrap"
+            className="min-h-[56px] h-auto py-2 px-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-base sm:text-xl flex items-center whitespace-normal sm:whitespace-nowrap"
             style={sfPro}
           >
             Health · Education · Social sectors
@@ -276,7 +295,7 @@ function Hero() {
               <ArrowUpRight className="w-6 h-6 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </span>
             <span
-              className="h-[56px] px-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-xl flex items-center whitespace-nowrap transition-colors duration-300 group-hover:border-[#F0B429]/60"
+              className="min-h-[56px] h-auto py-2 px-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-base sm:text-xl flex items-center whitespace-normal sm:whitespace-nowrap transition-colors duration-300 group-hover:border-[#F0B429]/60"
               style={sfPro}
             >
               Conference 2026 · First of its kind
@@ -451,10 +470,10 @@ function MissionStrip() {
             {AREAS.map(({ label, icon: Icon }) => (
               <span
                 key={label}
-                className="h-10 px-4 rounded-full bg-white border border-black/8 flex items-center gap-2 text-[#15221B]/80 text-base"
+                className="min-h-10 h-auto py-1.5 px-4 rounded-full bg-white border border-black/8 flex items-center gap-2 text-[#15221B]/80 text-base"
                 style={sfPro}
               >
-                <Icon className="w-4 h-4 text-[#2E7D5B]" />
+                <Icon className="w-4 h-4 text-[#2E7D5B] shrink-0" />
                 {label}
               </span>
             ))}
@@ -803,7 +822,7 @@ function CtaBand() {
         >
           <Link
             to="/contact"
-            className="btn-press h-14 px-8 bg-white text-[#15221B] rounded-2xl inline-flex items-center text-xl font-medium hover:bg-neutral-100 shadow-lg whitespace-nowrap"
+            className="btn-press min-h-14 h-auto py-2 px-8 bg-white text-[#15221B] rounded-2xl inline-flex items-center justify-center text-center text-lg sm:text-xl font-medium hover:bg-neutral-100 shadow-lg whitespace-normal"
             style={sfPro}
           >
             Contact the association

@@ -66,7 +66,7 @@ function BlogHero() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.55 }}
-          className="h-9 px-5 rounded-full border border-white/40 text-white/80 text-sm flex items-center tracking-[0.14em] uppercase"
+          className="min-h-9 h-auto max-w-full py-1.5 px-5 rounded-full border border-white/40 text-white/80 text-xs sm:text-sm flex items-center justify-center text-center tracking-[0.14em] uppercase whitespace-normal"
           style={interTight}
         >
           The OTAM Journal
@@ -316,7 +316,7 @@ function UpdatesBand() {
         >
           <a
             href="mailto:otammalawi@gmail.com?subject=Please%20add%20me%20to%20OTAM%20journal%20updates"
-            className="btn-press h-14 px-8 bg-white text-[#15221B] rounded-2xl inline-flex items-center gap-3 text-xl font-medium hover:bg-neutral-100 shadow-lg whitespace-nowrap"
+            className="btn-press min-h-14 h-auto py-2 px-8 bg-white text-[#15221B] rounded-2xl inline-flex items-center gap-3 text-lg sm:text-xl font-medium hover:bg-neutral-100 shadow-lg whitespace-normal"
             style={sfPro}
           >
             <Mail className="w-5 h-5" />

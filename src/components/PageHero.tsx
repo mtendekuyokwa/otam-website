@@ -50,7 +50,7 @@ export function PageHero({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.55 }}
-          className="h-9 px-5 rounded-full border border-white/40 text-white/80 text-sm flex items-center tracking-[0.14em] uppercase"
+          className="min-h-9 h-auto max-w-full py-1.5 px-5 rounded-full border border-white/40 text-white/80 text-xs sm:text-sm flex items-center justify-center text-center tracking-[0.14em] uppercase whitespace-normal"
           style={interTight}
         >
           {kicker}

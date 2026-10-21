@@ -157,7 +157,7 @@ function Team() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{ delay: i * 0.07, duration: 0.45 }}
-                  className="h-12 px-6 rounded-full bg-white border border-black/8 flex items-center text-[#15221B]/80 text-lg"
+                  className="min-h-12 h-auto py-2 px-6 rounded-full bg-white border border-black/8 flex items-center text-[#15221B]/80 text-base sm:text-lg whitespace-normal"
                   style={sfPro}
                 >
                   {s}
@@ -226,7 +226,7 @@ function Team() {
             {BENEFITS.map((b) => (
               <span
                 key={b}
-                className="h-10 px-4 rounded-full bg-[#2E7D5B]/8 border border-[#2E7D5B]/20 flex items-center text-[#15221B]/75"
+                className="min-h-10 h-auto py-1.5 px-4 rounded-full bg-[#2E7D5B]/8 border border-[#2E7D5B]/20 flex items-center text-[#15221B]/75 whitespace-normal"
                 style={sfPro}
               >
                 {b}
