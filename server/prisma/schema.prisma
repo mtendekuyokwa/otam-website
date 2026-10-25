@@ -1,0 +1,29 @@
+// OTAM — data model (M0 Identity first).
+// Local dev runs on SQLite. When production turns out to be MySQL (cPanel),
+// flip `provider = "sqlite"` → `"mysql"` and adjust `DATABASE_URL`.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  /// Matches [[00 - Unified account]]: one person = one account everywhere.
+  id           Int      @id @default(autoincrement())
+  /// Primary identity — unique, lowercase (service layer enforces lowercase).
+  email        String   @unique
+  /// Secondary identity — normalized to +265XXXXXXXXX on arrival.
+  phone        String   @unique
+  passwordHash String
+  fullName     String?
+  /// JSON array role badge, e.g. ["attendee"] or ["member","organizer"].
+  roles        String   @default("[\"attendee\"]")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("users")
+}
